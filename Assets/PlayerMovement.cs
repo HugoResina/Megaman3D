@@ -80,8 +80,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Jump()
     {
-        //float speed = 10;
-        //_playerInputs;
+        
     }
     private void Fall()
     {

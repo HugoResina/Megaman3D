@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.VisualScripting;
 
 public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
 {
@@ -12,7 +13,12 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
     public float JumpInput { get; private set; }
 
     private double MaxTimeToJump = 0.5;
+    private Rigidbody rb;
     double timeHeld = 0;
+    private float jumpForce = 10f;
+    //private bool isJumping = false;
+    //private float jumpTimeCounter = 0;
+    //private float extraJumpForce = 10f;
 
 
     private void OnEnable()
@@ -23,6 +29,9 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
         InputActions.Player.Enable();
         InputActions.Player.SetCallbacks(this);
         rb = GetComponent<Rigidbody>();
+
+        InputActions.Player.Jump.performed += JumpPerformed;
+        InputActions.Player.Jump.performed += JumpCanceled;
     }
 
     private void OnDisable()
@@ -30,8 +39,12 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
         InputActions.Player.Disable();
         InputActions.Player.RemoveCallbacks(this);
     }
+    private void Start()
+    {
+        
+    }
 
-  
+
 
     public void OnLook(InputAction.CallbackContext context)
     {
@@ -49,20 +62,53 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-       
+        if(context.performed)
+        Debug.Log("piupiu");
     }
 
+
+    public void JumpPerformed(InputAction.CallbackContext context)
+    {
+        rb.AddForce(Vector3.up * 15f, ForceMode.Impulse);
+        Debug.Log("salto");
+    }
+    public void JumpCanceled(InputAction.CallbackContext context)
+    {
+        Debug.Log("release space");
+
+    }
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            
-        }
-        if (context.canceled)
-        {
-           
 
-        }
-     
+
+        
+        JumpInput = context.ReadValue<float>();
+
+        /*
+         // press
+       if (context.started)
+       {
+           rb.AddForce(new Vector3(rb.linearVelocity.x, jumpForce, rb.linearVelocity.z));
+           isJumping = true;
+           jumpTimeCounter = (float)MaxTimeToJump;
+       }
+
+       // hold
+       if (context.performed && isJumping)
+       {
+           if (jumpTimeCounter > 0)
+           {
+               rb.AddForce(Vector3.up * extraJumpForce * Time.fixedDeltaTime, ForceMode.Impulse);
+               jumpTimeCounter -= Time.fixedDeltaTime;
+           }
+       }
+
+       //release
+       if (context.canceled)
+       {
+           isJumping = false;
+       }
+        */
+
     }
 }

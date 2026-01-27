@@ -63,19 +63,20 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
     public void OnAttack(InputAction.CallbackContext context)
     {
         if(context.performed)
-        Debug.Log("piupiu");
+        Debug.Log("disparo");
     }
 
 
     public void JumpPerformed(InputAction.CallbackContext context)
     {
-        rb.AddForce(Vector3.up * 15f, ForceMode.Impulse);
-        Debug.Log("salto");
+        timeHeld = context.duration;
+        
+     
     }
     public void JumpCanceled(InputAction.CallbackContext context)
     {
-        Debug.Log("release space");
 
+        rb.AddForce(Vector3.up * (float)timeHeld * jumpForce, ForceMode.Impulse);
     }
     public void OnJump(InputAction.CallbackContext context)
     {
@@ -84,32 +85,8 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
         
         JumpInput = context.ReadValue<float>();
         Debug.Log("salto");
-
-        /*
-         // press
-       if (context.started)
-       {
-           rb.AddForce(new Vector3(rb.linearVelocity.x, jumpForce, rb.linearVelocity.z));
-           isJumping = true;
-           jumpTimeCounter = (float)MaxTimeToJump;
-       }
-
-       // hold
-       if (context.performed && isJumping)
-       {
-           if (jumpTimeCounter > 0)
-           {
-               rb.AddForce(Vector3.up * extraJumpForce * Time.fixedDeltaTime, ForceMode.Impulse);
-               jumpTimeCounter -= Time.fixedDeltaTime;
-           }
-       }
-
-       //release
-       if (context.canceled)
-       {
-           isJumping = false;
-       }
-        */
-
+       
     }
+   
+
 }

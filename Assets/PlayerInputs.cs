@@ -16,6 +16,7 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
     private Rigidbody rb;
     double timeHeld = 0;
     private float jumpForce = 10f;
+    public bool isJumpHeld = false;
     //private bool isJumping = false;
     //private float jumpTimeCounter = 0;
     //private float extraJumpForce = 10f;
@@ -30,8 +31,8 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
         InputActions.Player.SetCallbacks(this);
         rb = GetComponent<Rigidbody>();
 
-        InputActions.Player.Jump.performed += JumpPerformed;
-        InputActions.Player.Jump.performed += JumpCanceled;
+        InputActions.Player.Jump.started += JumpPerformed;
+        InputActions.Player.Jump.canceled += JumpCanceled;
     }
 
     private void OnDisable()
@@ -69,24 +70,34 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     public void JumpPerformed(InputAction.CallbackContext context)
     {
-        timeHeld = context.duration;
-        
-     
+        //timeHeld = context.duration;
+        //Debug.Log("performed");        
+    
+        //JumpInput = 0;
+            
+
     }
     public void JumpCanceled(InputAction.CallbackContext context)
     {
-
-        rb.AddForce(Vector3.up * (float)timeHeld * jumpForce, ForceMode.Impulse);
-    }
-    public void OnJump(InputAction.CallbackContext context)
-    {
+        //Debug.Log("canceledS");
+        //JumpInput = 0;
 
 
         
-        JumpInput = context.ReadValue<float>();
-        Debug.Log("salto");
-       
     }
-   
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            JumpInput = 1f;   
+            isJumpHeld = true;
+        }
+
+        if (context.canceled)
+        {
+            JumpInput = 0f;
+            isJumpHeld = false;
+        }
+    }
 
 }

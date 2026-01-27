@@ -22,8 +22,13 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInputs _playerInputs;
     private Vector3 _currentMovement = Vector3.zero;
     private Vector2 _cameraRotation = Vector2.zero;
+    [Header("Jump Settings")]
+    public float jumpForce = 5f;
 
-    private Rigidbody rb;
+    private float verticalVelocity;
+    public float jumpCutMultiplier = 0.5f; 
+
+
 
 
     private void Awake()
@@ -36,15 +41,17 @@ public class PlayerMovement : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        rb = GetComponent<Rigidbody>();
+
     }
     
 
     private void Update()
     {
       
-            Movement();
             Jump();
+            CutJump();
+            Movement();
+
     }
 
     private void LateUpdate()
@@ -55,19 +62,28 @@ public class PlayerMovement : MonoBehaviour
 
     private void Movement()
     {
-        float speed =  moveSpeed;
-        float HorizontalSpeed = _playerInputs.MoveInput.x * speed;
-        float VerticalSpeed = _playerInputs.MoveInput.y * speed;
+        float speed = moveSpeed;
 
-        Vector3 HorizontalMovement = new Vector3(HorizontalSpeed, 0, VerticalSpeed);
-        HorizontalMovement = transform.rotation * HorizontalMovement;
+        float horizontal = _playerInputs.MoveInput.x * speed;
+        float vertical = _playerInputs.MoveInput.y * speed;
 
-        Fall();
+        Vector3 move = new Vector3(horizontal, 0, vertical);
+        move = transform.rotation * move;
 
-        _currentMovement.x = HorizontalMovement.x;
-        _currentMovement.z = HorizontalMovement.z;
+      
+        if (_characterController.isGrounded)
+        {
+            if (verticalVelocity < 0)
+                verticalVelocity = -2f;
+        }
+        else
+        {
+            verticalVelocity -= gravity * Time.deltaTime;
+        }
 
-        _characterController.Move(_currentMovement * Time.deltaTime);
+        move.y = verticalVelocity;
+
+        _characterController.Move(move * Time.deltaTime);
     }
 
     private void Look()
@@ -81,28 +97,20 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Jump()
     {
-
-        float jumpForce = 10f;
-
-
-        rb.AddForce(0, jumpForce, 0, ForceMode.Impulse);
-       
-
-        Fall();
-
-      
-     
+        if (_characterController.isGrounded && _playerInputs.JumpInput > 0)
+        {
+            verticalVelocity = Mathf.Sqrt(jumpForce * 2f * gravity);
+        }
+        
     }
-    private void Fall()
+    private void CutJump()
     {
-        if (_characterController.isGrounded)
+    
+        if (verticalVelocity > 0 && !_playerInputs.isJumpHeld)
         {
-            _currentMovement.y = -0.5f;
-        }
-        else
-        {
-            _currentMovement.y -= gravity * Time.deltaTime;
+            verticalVelocity *= jumpCutMultiplier;
         }
     }
+
 
 }

@@ -83,6 +83,7 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
         
         JumpInput = context.ReadValue<float>();
+        Debug.Log("salto");
 
         /*
          // press

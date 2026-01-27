@@ -44,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
     {
       
             Movement();
+            Jump();
     }
 
     private void LateUpdate()
@@ -80,7 +81,17 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Jump()
     {
-        
+
+        float jumpForce = 10f;
+
+
+        rb.AddForce(0, jumpForce, 0, ForceMode.Impulse);
+       
+
+        Fall();
+
+      
+     
     }
     private void Fall()
     {

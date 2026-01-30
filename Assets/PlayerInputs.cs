@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
 {
     public InputSystem_Actions InputActions { get; private set; }
+    public PlayerShoot playerShoot;
     public Vector2 MoveInput { get; private set; }
     public Vector2 LookInput { get; private set; }
 
@@ -26,6 +27,7 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
     {
         InputActions = new InputSystem_Actions();
         InputActions.Enable();
+        playerShoot = GetComponent<PlayerShoot>();
 
         InputActions.Player.Enable();
         InputActions.Player.SetCallbacks(this);
@@ -64,7 +66,18 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
     public void OnAttack(InputAction.CallbackContext context)
     {
         if(context.performed)
-        Debug.Log("disparo");
+        {
+            Debug.Log("Attack Performed");
+           // Debug.Log(context.duration);
+        }
+        if (context.canceled)
+        {
+            Debug.Log(context.duration);
+            Debug.Log(context.time);
+            Debug.Log(context.startTime);
+
+            playerShoot.ChooseProj(context.time- context.startTime);
+        }
     }
 
 

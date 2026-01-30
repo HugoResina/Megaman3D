@@ -78,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            verticalVelocity -= gravity * Time.deltaTime;
+            verticalVelocity -= gravity * 2f * Time.deltaTime;
         }
 
         move.y = verticalVelocity;

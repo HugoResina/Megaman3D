@@ -22,11 +22,15 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInputs _playerInputs;
     private Vector3 _currentMovement = Vector3.zero;
     private Vector2 _cameraRotation = Vector2.zero;
+    private bool _isGrounded;
+    private bool _isGrabbedToWall;
     [Header("Jump Settings")]
     public float jumpForce = 5f;
 
-    private float verticalVelocity;
-    public float jumpCutMultiplier = 0.5f; 
+    private float verticalVelocity = -1f;
+    public float jumpCutMultiplier = 0.5f;
+
+    public LayerMask JumpableLayer;
 
 
 
@@ -47,13 +51,26 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-      
+            IsGroundedAndWalls();
+            
             Jump();
             CutJump();
             Movement();
-
+            
+            Debug.Log(verticalVelocity);
     }
 
+
+    private void IsGroundedAndWalls()
+    {
+
+        RaycastHit hit;
+        _isGrabbedToWall = Physics.Raycast(transform.position, transform.forward, out hit, 2f, JumpableLayer);
+        _isGrounded = ( _isGrabbedToWall || _characterController.isGrounded);
+        
+
+
+    }
     private void LateUpdate()
     {
        
@@ -71,17 +88,22 @@ public class PlayerMovement : MonoBehaviour
         move = transform.rotation * move;
 
       
-        if (_characterController.isGrounded)
-        {
-            if (verticalVelocity < 0)
+        
+       
+            
+            verticalVelocity -= 0.05f;
+            if (verticalVelocity <= -2f && _isGrabbedToWall && !_isGrounded)
+            {
                 verticalVelocity = -2f;
-        }
-        else
-        {
-            verticalVelocity -= gravity * 2f * Time.deltaTime;
-        }
+            }
+            else if (verticalVelocity <= -10f)
+            {
+            verticalVelocity = -10f; 
+            }
 
-        move.y = verticalVelocity;
+
+
+            move.y = verticalVelocity;
 
         _characterController.Move(move * Time.deltaTime);
     }
@@ -97,9 +119,15 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Jump()
     {
-        if (_characterController.isGrounded && _playerInputs.JumpInput > 0)
+     
+
+        if (_isGrounded && _playerInputs.JumpInput > 0)
         {
-            verticalVelocity = Mathf.Sqrt(jumpForce * 2f * gravity);
+            Debug.Log("puc saltar: ");
+            float a = _isGrabbedToWall ? jumpForce/2 : jumpForce; 
+            verticalVelocity = Mathf.Sqrt(a * 2f * gravity);
+            Debug.Log(jumpForce);
+           
         }
         
     }

@@ -7,7 +7,6 @@ using Unity.VisualScripting;
 public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
 {
     public InputSystem_Actions InputActions { get; private set; }
-    public PlayerShoot playerShoot;
     public Vector2 MoveInput { get; private set; }
     public Vector2 LookInput { get; private set; }
 
@@ -18,6 +17,7 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
     double timeHeld = 0;
     private float jumpForce = 10f;
     public bool isJumpHeld = false;
+    private Shooter shooter;
     //private bool isJumping = false;
     //private float jumpTimeCounter = 0;
     //private float extraJumpForce = 10f;
@@ -27,8 +27,7 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
     {
         InputActions = new InputSystem_Actions();
         InputActions.Enable();
-        playerShoot = GetComponent<PlayerShoot>();
-
+        shooter = GetComponent<Shooter>();
         InputActions.Player.Enable();
         InputActions.Player.SetCallbacks(this);
         rb = GetComponent<Rigidbody>();
@@ -76,7 +75,7 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
             Debug.Log(context.time);
             Debug.Log(context.startTime);
 
-            playerShoot.ChooseProj(context.time- context.startTime);
+            shooter.ChooseProj(context.time- context.startTime);
         }
     }
 

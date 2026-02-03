@@ -934,6 +934,7 @@ GameObject:
   - component: {fileID: 1755664551}
   - component: {fileID: 1755664557}
   - component: {fileID: 1755664558}
+  - component: {fileID: 1755664560}
   - component: {fileID: 1755664559}
   m_Layer: 0
   m_Name: Capsule
@@ -1100,6 +1101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fa3a89002a10fa46ba4549da3df3d1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputs
+  isJumpHeld: 0
 --- !u!114 &1755664558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1112,7 +1114,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16dd6ec7321c5b54a84175daee416433, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputs
-  playerShoot: {fileID: 0}
   isJumpHeld: 0
 --- !u!114 &1755664559
 MonoBehaviour:
@@ -1125,15 +1126,29 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59865a87daee6f44483b96e67da4df2f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerShoot
-  smallProjectile: {fileID: 943529684702221349, guid: 41857dd1af9d1aa47b017a66414f8732, type: 3}
-  mediumProjectile: {fileID: 7534354691697419000, guid: 76293f844a74c164784aa32e8dfa5e0b, type: 3}
-  largeProjectile: {fileID: 3297064628845400584, guid: 62b11bcdb9ef4a64183981487d06148c, type: 3}
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectPool
+  smallPrefab: {fileID: 0}
+  mediumPrefab: {fileID: 0}
+  largePrefab: {fileID: 0}
   poolSize: 50
-  shootPoint: {fileID: 1233028159}
+--- !u!114 &1755664560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1755664550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c05b117d16db62e4e8b192b9711d036f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Shooter
+  pool: {fileID: 0}
+  shootPoint: {fileID: 0}
   mediumChargeTime: 0.5
   longChargeTime: 1.5
-  maxTimePrefab: 3
+  projectileLife: 3
+  projectileSpeed: 20
 --- !u!1 &1961349013
 GameObject:
   m_ObjectHideFlags: 0

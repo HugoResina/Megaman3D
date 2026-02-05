@@ -70,8 +70,11 @@ public class PlayerMovement : MonoBehaviour
 
 
         //Debug.Log(verticalVelocity);
-        Debug.Log(isItem);
+       
         isItem = Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward, out hit, 3f, ItemLayer);
+        Debug.Log(isItem);
+        Debug.Log(UIManager.Instance.InteractText.gameObject.activeInHierarchy);
+        UIManager.Instance.InteractText.gameObject.SetActive(isItem);
         //Debug.DrawRay(_playerCamera.transform.position, _playerCamera.transform.forward, Color.red);
 
     }

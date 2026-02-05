@@ -34,10 +34,15 @@ public class PlayerMovement : MonoBehaviour
 
 
     bool isItem = false;
+    bool isDoor = false;
     public LayerMask JumpableLayer;
     public LayerMask ItemLayer;
+    public LayerMask DoorLayer;
 
     RaycastHit hit;
+    RaycastHit a;
+
+
 
 
     private void Awake()
@@ -70,10 +75,11 @@ public class PlayerMovement : MonoBehaviour
 
 
         //Debug.Log(verticalVelocity);
-       
+
         isItem = Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward, out hit, 3f, ItemLayer);
-        Debug.Log(isItem);
-        Debug.Log(UIManager.Instance.InteractText.gameObject.activeInHierarchy);
+        isDoor = Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward, out hit, 3f, DoorLayer);
+        Debug.Log(isDoor);
+        //Debug.Log(UIManager.Instance.InteractText.gameObject.activeInHierarchy);
         UIManager.Instance.InteractText.gameObject.SetActive(isItem);
         //Debug.DrawRay(_playerCamera.transform.position, _playerCamera.transform.forward, Color.red);
 
@@ -83,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
     private void IsGroundedAndWalls()
     {
 
-        RaycastHit hit;
+     
         _isGrabbedToWall = Physics.Raycast(transform.position, transform.forward, out hit, 3f, JumpableLayer);
         _isGrounded = (_isGrabbedToWall || _characterController.isGrounded);
 
@@ -143,8 +149,24 @@ public class PlayerMovement : MonoBehaviour
       
         if (isItem)
         {
+
+            bool hititem;
+            hititem = Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward, out a, 3f, ItemLayer);
             Debug.Log("Interactuo con item");
-            hit.transform.gameObject.SetActive(false);
+            a.transform.gameObject.SetActive(false);
+            GayManager.Instance.HasKey = true;
+        }
+        else if (isDoor)
+        {
+            //Debug.Log(GayManager.Instance.HasKey ? "Obro porta": "Falta clau");
+            if (GayManager.Instance.HasKey)
+            {
+                Debug.Log("Abro");
+            }
+            else if(!GayManager.Instance.HasKey)
+            {
+                Debug.Log("Falta llave");
+            }
         }
     }
     private void Jump()

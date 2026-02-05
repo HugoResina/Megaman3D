@@ -697,7 +697,7 @@ MonoBehaviour:
   smallPrefab: {fileID: -358964568630494870, guid: 41857dd1af9d1aa47b017a66414f8732, type: 3}
   mediumPrefab: {fileID: 7042458916041489696, guid: 76293f844a74c164784aa32e8dfa5e0b, type: 3}
   largePrefab: {fileID: -1365472516746596312, guid: 62b11bcdb9ef4a64183981487d06148c, type: 3}
-  poolSize: 50
+  poolSize: 60
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -847,7 +847,7 @@ Transform:
   m_GameObject: {fileID: 1233028158}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.0045062667, z: -0, w: 0.9999899}
-  m_LocalPosition: {x: 0.17999983, y: -0.03000009, z: 0.84}
+  m_LocalPosition: {x: 0.23, y: -0.09, z: 0.84}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -980,7 +980,6 @@ GameObject:
   - component: {fileID: 1755664553}
   - component: {fileID: 1755664552}
   - component: {fileID: 1755664551}
-  - component: {fileID: 1755664557}
   - component: {fileID: 1755664558}
   - component: {fileID: 1755664560}
   m_Layer: 0
@@ -1139,19 +1138,6 @@ Transform:
   - {fileID: 330585546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1755664557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1755664550}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fa3a89002a10fa46ba4549da3df3d1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInputs
-  isJumpHeld: 0
 --- !u!114 &1755664558
 MonoBehaviour:
   m_ObjectHideFlags: 0

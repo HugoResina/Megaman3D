@@ -20,6 +20,8 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
     private float jumpForce = 10f;
     public bool isJumpHeld = false;
     public static event Action HasInteracted;
+
+    private Shooter Shooter;
     //private bool isJumping = false;
     //private float jumpTimeCounter = 0;
     //private float extraJumpForce = 10f;
@@ -29,7 +31,7 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
     {
         InputActions = new InputSystem_Actions();
         InputActions.Enable();
-        //playerShoot = GetComponent<PlayerShoot>();
+        Shooter = GetComponent<Shooter>();
 
         InputActions.Player.Enable();
         InputActions.Player.SetCallbacks(this);
@@ -79,6 +81,7 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
             //Debug.Log(context.startTime);
 
             //playerShoot.ChooseProj(context.time - context.startTime);
+            Shooter.ChooseProj(context.time - context.startTime);
         }
     }
 

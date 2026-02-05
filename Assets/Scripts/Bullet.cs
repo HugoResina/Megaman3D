@@ -5,6 +5,7 @@ public class Bullet : MonoBehaviour
 {
     private Rigidbody rb;
     private ObjectPool pool;
+    private Coroutine returnCoroutine;
 
     public BulletType Type { get; private set; }
 
@@ -24,12 +25,28 @@ public class Bullet : MonoBehaviour
         gameObject.SetActive(true);
         rb.linearVelocity = direction * speed;
 
-        StartCoroutine(ReturnAfterTime(lifeTime));
+        // Guardamos la coroutine para poder cancelarla
+        returnCoroutine = StartCoroutine(ReturnAfterTime(lifeTime));
     }
 
     private IEnumerator ReturnAfterTime(float time)
     {
         yield return new WaitForSeconds(time);
+        ReturnToPool();
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        ReturnToPool();
+    }
+
+    private void ReturnToPool()
+    {
+        if (returnCoroutine != null)
+        {
+            StopCoroutine(returnCoroutine);
+            returnCoroutine = null;
+        }
+
         pool.ReturnBullet(this);
     }
 

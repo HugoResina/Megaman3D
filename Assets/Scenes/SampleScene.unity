@@ -650,6 +650,54 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &813398715
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 813398716}
+  - component: {fileID: 813398717}
+  m_Layer: 0
+  m_Name: Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &813398716
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813398715}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.24, y: 1.18, z: 0.55604}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &813398717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813398715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59865a87daee6f44483b96e67da4df2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectPool
+  smallPrefab: {fileID: -358964568630494870, guid: 41857dd1af9d1aa47b017a66414f8732, type: 3}
+  mediumPrefab: {fileID: 7042458916041489696, guid: 76293f844a74c164784aa32e8dfa5e0b, type: 3}
+  largePrefab: {fileID: -1365472516746596312, guid: 62b11bcdb9ef4a64183981487d06148c, type: 3}
+  poolSize: 50
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -935,7 +983,6 @@ GameObject:
   - component: {fileID: 1755664557}
   - component: {fileID: 1755664558}
   - component: {fileID: 1755664560}
-  - component: {fileID: 1755664559}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -991,6 +1038,9 @@ MonoBehaviour:
   jumpForce: 5
   jumpCutMultiplier: 0.5
   JumpableLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  ItemLayer:
     serializedVersion: 2
     m_Bits: 0
 --- !u!136 &1755664553
@@ -1115,22 +1165,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputs
   isJumpHeld: 0
---- !u!114 &1755664559
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1755664550}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59865a87daee6f44483b96e67da4df2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ObjectPool
-  smallPrefab: {fileID: 0}
-  mediumPrefab: {fileID: 0}
-  largePrefab: {fileID: 0}
-  poolSize: 50
 --- !u!114 &1755664560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1143,8 +1177,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c05b117d16db62e4e8b192b9711d036f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Shooter
-  pool: {fileID: 0}
-  shootPoint: {fileID: 0}
+  pool: {fileID: 813398717}
+  shootPoint: {fileID: 1233028159}
   mediumChargeTime: 0.5
   longChargeTime: 1.5
   projectileLife: 3
@@ -1263,3 +1297,4 @@ SceneRoots:
   - {fileID: 1755664556}
   - {fileID: 1961349017}
   - {fileID: 32067423}
+  - {fileID: 813398716}

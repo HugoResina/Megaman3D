@@ -7,17 +7,19 @@ using Unity.VisualScripting;
 public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
 {
     public InputSystem_Actions InputActions { get; private set; }
+    //public PlayerShoot playerShoot;
     public Vector2 MoveInput { get; private set; }
     public Vector2 LookInput { get; private set; }
 
     public float JumpInput { get; private set; }
+    public int InteractInput { get; private set; }
 
     private double MaxTimeToJump = 0.5;
     private Rigidbody rb;
     double timeHeld = 0;
     private float jumpForce = 10f;
     public bool isJumpHeld = false;
-    private Shooter shooter;
+    public static event Action HasInteracted;
     //private bool isJumping = false;
     //private float jumpTimeCounter = 0;
     //private float extraJumpForce = 10f;
@@ -27,7 +29,8 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
     {
         InputActions = new InputSystem_Actions();
         InputActions.Enable();
-        shooter = GetComponent<Shooter>();
+        //playerShoot = GetComponent<PlayerShoot>();
+
         InputActions.Player.Enable();
         InputActions.Player.SetCallbacks(this);
         rb = GetComponent<Rigidbody>();
@@ -43,7 +46,7 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
     }
     private void Start()
     {
-        
+
     }
 
 
@@ -55,27 +58,27 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     public void OnMove(InputAction.CallbackContext context)
     {
-      
+
         MoveInput = context.ReadValue<Vector2>();
     }
 
-  
+
 
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        if(context.performed)
+        if (context.performed)
         {
-            Debug.Log("Attack Performed");
-           // Debug.Log(context.duration);
+            //Debug.Log("Attack Performed");
+            // Debug.Log(context.duration);
         }
         if (context.canceled)
         {
-            Debug.Log(context.duration);
-            Debug.Log(context.time);
-            Debug.Log(context.startTime);
+            //Debug.Log(context.duration);
+            //Debug.Log(context.time);
+            //Debug.Log(context.startTime);
 
-            shooter.ChooseProj(context.time- context.startTime);
+            //playerShoot.ChooseProj(context.time - context.startTime);
         }
     }
 
@@ -84,9 +87,9 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
     {
         //timeHeld = context.duration;
         //Debug.Log("performed");        
-    
+
         //JumpInput = 0;
-            
+
 
     }
     public void JumpCanceled(InputAction.CallbackContext context)
@@ -95,13 +98,13 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
         //JumpInput = 0;
 
 
-        
+
     }
     public void OnJump(InputAction.CallbackContext context)
     {
         if (context.started)
         {
-            JumpInput = 1f;   
+            JumpInput = 1f;
             isJumpHeld = true;
         }
 
@@ -112,4 +115,11 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
         }
     }
 
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            HasInteracted?.Invoke();
+        }
+    }
 }

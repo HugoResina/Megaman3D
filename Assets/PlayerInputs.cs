@@ -76,9 +76,9 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
         }
         if (context.canceled)
         {
-            Debug.Log(context.duration);
-            Debug.Log(context.time);
-            Debug.Log(context.startTime);
+            //    Debug.Log(context.duration);
+            //    Debug.Log(context.time);
+            //    Debug.Log(context.startTime);
 
             //playerShoot.ChooseProj(context.time - context.startTime);
             Shooter.ChooseProj(context.time - context.startTime);

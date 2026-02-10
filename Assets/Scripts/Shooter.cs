@@ -14,6 +14,7 @@ public class Shooter : MonoBehaviour
 
     public void ChooseProj(double timePressed)
     {
+        Debug.Log($"Time Pressed: {timePressed}");
         BulletType type;
 
         if (timePressed < mediumChargeTime)

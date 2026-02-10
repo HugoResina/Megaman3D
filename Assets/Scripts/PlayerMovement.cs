@@ -78,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
 
         isItem = Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward, out hit, 3f, ItemLayer);
         isDoor = Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward, out hit, 3f, DoorLayer);
-        Debug.Log(isDoor);
+        //Debug.Log(isDoor);
         //Debug.Log(UIManager.Instance.InteractText.gameObject.activeInHierarchy);
         UIManager.Instance.InteractText.gameObject.SetActive(isItem);
         //Debug.DrawRay(_playerCamera.transform.position, _playerCamera.transform.forward, Color.red);

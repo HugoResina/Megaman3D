@@ -15,13 +15,13 @@ public class WaspBehaviour : MonoBehaviour
     private Vector3 playerLastPosition;
     private Vector3 waspPositionBeforeAttack;
     private Vector3 attackDirection;
-    public Transform startMarker;
-    public Transform endMarker;
+    [SerializeField]
+    private LayerMask PlayerLayer;
     public float speed = 1f;
     private float startTime;
     private float journeyLength = 10f;
     [SerializeField]
-    private float lookDistance = 10f;
+    private float lookDistance = 8f;
     private float fracJourney;
     private float distCovered;
     public EnemyStates CurrentState;
@@ -33,6 +33,7 @@ public class WaspBehaviour : MonoBehaviour
     }
     private void Update()
     {
+        Debug.Log(CurrentState);
         //if (isAttacking)
         //{
         //     distCovered = (Time.time - startTime) * speed;
@@ -49,13 +50,14 @@ public class WaspBehaviour : MonoBehaviour
                 //asdf
                 //distCovered = (Time.time - startTime) * speed;
                 fracJourney = 0.008f;
-                Debug.Log("cuanto? " +  fracJourney);
+                //Debug.Log("cuanto? " +  fracJourney);
                 Attack();
                 break;
             case EnemyStates.Chase:
-                //
+                Chase();
                 break;
             case EnemyStates.Reposition:
+                Reposition();
                 break;
             default:
                 break;
@@ -65,21 +67,22 @@ public class WaspBehaviour : MonoBehaviour
     {
         if (other.gameObject.layer == 3)
         {
-
+            Debug.Log(other.gameObject.name);
             bool hit;
-            hit = Physics.Raycast(transform.position, (other.transform.position - transform.position), lookDistance, 3);
+            hit = Physics.Raycast(transform.position, (other.transform.position - transform.position), lookDistance, PlayerLayer);
 
             //if hit player, attack
             //else move to 
             transform.LookAt(other.transform.position);
-            Debug.Log("hit: " +  hit);
+            playerLastPosition = other.transform.position;
+            //Debug.Log("hit: " +  hit);
             if (hit)
             {
-                Debug.Log("CHOKE ON ME");
+                //Debug.Log("CHOKE ON ME");
                 if (CanAttack)
                 {
-                    Debug.Log("canAttack");
-                    playerLastPosition = other.transform.position;
+                    //Debug.Log("canAttack");
+                   
 
                     waspPositionBeforeAttack = transform.position;
                     
@@ -97,6 +100,15 @@ public class WaspBehaviour : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == 3 || collision.gameObject.layer == 0 )
+        {
+            CurrentState = EnemyStates.Reposition;
+            
+            //SI LAYER 3 DAÑO PLAYER
+        }
+    }
     private IEnumerator ShootPlayer()
     {
         //yield return new WaitForSeconds(ShootRate);
@@ -107,15 +119,36 @@ public class WaspBehaviour : MonoBehaviour
         yield return new WaitForSeconds(ShootRate);
         CanAttack = true ;
     }
+    private IEnumerator RecoverTimeFromAttack()
+    {
+        //yield return new WaitForSeconds(ShootRate);
+
+        yield return new WaitForSeconds(4);
+        CurrentState = EnemyStates.Reposition;
+    }
     private void Attack()
     {
-        
-        Debug.Log("ataco");
+        //Debug.Log("ataco");
         isAttacking = true;
         //attackDirection = playerLastPosition - transform.position;
         //transform.position = Vector3.MoveTowards(transform.position, playerLastPosition, 15);
-        
+        StartCoroutine(RecoverTimeFromAttack());
         transform.position = Vector3.Lerp(transform.position,playerLastPosition, fracJourney);
+    }
+    private void Chase()
+    {
+        transform.position = Vector3.Lerp(transform.position, new Vector3(playerLastPosition.x, transform.position.y, playerLastPosition.z), 0.004f);
+        CanAttack = true;
+    }
+    private void Reposition()
+    {
+        transform.position = Vector3.Lerp(transform.position, waspPositionBeforeAttack, 0.004f);
+        Vector3 dist = transform.position - waspPositionBeforeAttack;
+        if (dist.magnitude < 0.5f)
+        {
+            CurrentState = EnemyStates.Chase;
+            CanAttack = true ;
+        }
     }
     private void OnDrawGizmos()
     {

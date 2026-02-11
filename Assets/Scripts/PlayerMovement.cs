@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _isGrabbedToWall;
     private bool _isHoveringItem;
     [Header("Jump Settings")]
-    public float jumpForce = 5f;
+    public float jumpForce = 7f;
 
     private float verticalVelocity = -1f;
     public float jumpCutMultiplier = 0.5f;
@@ -119,11 +119,11 @@ public class PlayerMovement : MonoBehaviour
         verticalVelocity -= 0.1f;
         if (verticalVelocity <= -2f && _isGrabbedToWall && !_isGrounded)
         {
-            verticalVelocity = -2f;
+            verticalVelocity = -1f;
         }
         else if (verticalVelocity <= -15f)
         {
-            verticalVelocity = -15f;
+            verticalVelocity = -10f;
         }
 
 

@@ -377,8 +377,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96304bfeab073a64884afc900deb09fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBehaviour
-  startMarker: {fileID: 0}
-  endMarker: {fileID: 0}
+  PlayerLayer:
+    serializedVersion: 2
+    m_Bits: 8
   speed: 1
   lookDistance: 10
   CurrentState: 0
@@ -2137,9 +2138,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1419482867879607127, guid: d2802a9a078d3624495ecc69d76e0f86, type: 3}
+      propertyPath: jumpForce
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1664830935394035032, guid: d2802a9a078d3624495ecc69d76e0f86, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.276528
+      value: -2.61
       objectReference: {fileID: 0}
     - target: {fileID: 1664830935394035032, guid: d2802a9a078d3624495ecc69d76e0f86, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2147,7 +2152,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1664830935394035032, guid: d2802a9a078d3624495ecc69d76e0f86, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 15.795173
+      value: 18.05
       objectReference: {fileID: 0}
     - target: {fileID: 1664830935394035032, guid: d2802a9a078d3624495ecc69d76e0f86, type: 3}
       propertyPath: m_LocalRotation.w

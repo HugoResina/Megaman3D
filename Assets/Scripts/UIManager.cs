@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     public Text InteractText;
+    public Image HealthBarFill;
 
     private void Awake()
     {

@@ -6,6 +6,9 @@ public class Bullet : MonoBehaviour
     private Rigidbody rb;
     private ObjectPool pool;
     private Coroutine returnCoroutine;
+    private float SmallDmg = 10f;
+    private float MediumDmg = 25f;
+    private float LargeDmg = 50f;
 
     public BulletType Type { get; private set; }
 
@@ -36,7 +39,22 @@ public class Bullet : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        ReturnToPool();
+        Health health = collision.gameObject.GetComponent<Health>();
+        if (health != null)
+        {
+            float damage = Type switch
+            {
+                BulletType.Small => SmallDmg,
+                BulletType.Medium => MediumDmg,
+                BulletType.Large => LargeDmg,
+                _ => 0f
+            };
+            health.TakeDamage(damage);
+        }
+        if (!collision.gameObject.CompareTag("Player"))
+        {
+            ReturnToPool();
+        }
     }
 
     private void ReturnToPool()

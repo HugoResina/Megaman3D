@@ -22,10 +22,11 @@ public class Health : MonoBehaviour
     private bool canTakeDamage = true;
     [SerializeField]
     private bool isRegenerating = false;
-    
+
     private void Start()
     {
         currentHealth = maxHealth;
+        UpdateHealthBar();
     }
 
     private void Update()
@@ -49,6 +50,7 @@ public class Health : MonoBehaviour
             currentHealth += healthRegenRate * Time.deltaTime;
             currentHealth = Mathf.Min(currentHealth, maxHealth);
             lastRegenTime = Time.time;
+            UpdateHealthBar();
         }
     }
 
@@ -56,10 +58,14 @@ public class Health : MonoBehaviour
     {
         if (isDead || !canTakeDamage)
             return;
+
         currentHealth -= damageAmount;
         lastDamageTime = Time.time;
         canTakeDamage = false;
         isRegenerating = false;
+
+        UpdateHealthBar();
+
         if (currentHealth <= 0)
         {
             Die();
@@ -70,5 +76,14 @@ public class Health : MonoBehaviour
     {
         isDead = true;
         Debug.Log("Player has died.");
+    }
+
+    private void UpdateHealthBar()
+    {
+        if (UIManager.Instance != null && UIManager.Instance.HealthBarFill != null)
+        {
+            float healthPercent = currentHealth / maxHealth;
+            UIManager.Instance.HealthBarFill.fillAmount = healthPercent;
+        }
     }
 }

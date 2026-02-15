@@ -6,7 +6,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     public Text InteractText;
-    public Image HealthBarFill;
+    public Image HealthBarFill; // This should be the fill image, not the background
 
     private void Awake()
     {

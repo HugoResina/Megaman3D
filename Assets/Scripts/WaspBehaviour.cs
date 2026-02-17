@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-public enum EnemyStates
+public enum WaspStates
 {
     Idle,
     Attack,
@@ -24,16 +24,16 @@ public class WaspBehaviour : MonoBehaviour
     private float lookDistance = 8f;
     private float fracJourney;
     private float distCovered;
-    public EnemyStates CurrentState;
+    public WaspStates CurrentState;
         
     private void Start()
     {
-        CurrentState = EnemyStates.Idle;
+        CurrentState = WaspStates.Idle;
         startTime = Time.time;
     }
     private void Update()
     {
-        Debug.Log(CurrentState);
+        //Debug.Log(CurrentState);
         //if (isAttacking)
         //{
         //     distCovered = (Time.time - startTime) * speed;
@@ -43,20 +43,20 @@ public class WaspBehaviour : MonoBehaviour
 
         switch (CurrentState)
         {
-            case EnemyStates.Idle:
+            case WaspStates.Idle:
                 //awdf
                 break;
-            case EnemyStates.Attack:
+            case WaspStates.Attack:
                 //asdf
                 //distCovered = (Time.time - startTime) * speed;
                 fracJourney = 0.008f;
                 //Debug.Log("cuanto? " +  fracJourney);
                 Attack();
                 break;
-            case EnemyStates.Chase:
+            case WaspStates.Chase:
                 Chase();
                 break;
-            case EnemyStates.Reposition:
+            case WaspStates.Reposition:
                 Reposition();
                 break;
             default:
@@ -67,36 +67,32 @@ public class WaspBehaviour : MonoBehaviour
     {
         if (other.gameObject.layer == 3)
         {
-            Debug.Log(other.gameObject.name);
-            bool hit;
-            hit = Physics.Raycast(transform.position, (other.transform.position - transform.position), lookDistance, PlayerLayer);
+            RaycastHit hit;
+            Vector3 direction = (other.transform.position - transform.position);
 
-            //if hit player, attack
-            //else move to 
-            transform.LookAt(other.transform.position);
-            playerLastPosition = other.transform.position;
-            //Debug.Log("hit: " +  hit);
-            if (hit)
+            
+
+            if (Physics.Raycast(transform.position, direction, out hit))
             {
-                //Debug.Log("CHOKE ON ME");
-                if (CanAttack)
+                Debug.DrawRay(transform.position, direction * lookDistance, Color.red);
+                Debug.Log("is player hit:" + (hit.collider.gameObject.layer == 3));
+                if (hit.collider.gameObject.layer == 3) 
                 {
-                    //Debug.Log("canAttack");
-                   
+                    playerLastPosition = other.transform.position;
+                    transform.LookAt(playerLastPosition);
 
-                    waspPositionBeforeAttack = transform.position;
-                    
-                    CanAttack = false;
-                    CurrentState = EnemyStates.Attack;
-
-                    //StartCoroutine(ShootPlayer());
+                    if (CanAttack)
+                    {
+                        waspPositionBeforeAttack = transform.position;
+                        CanAttack = false;
+                        CurrentState = WaspStates.Attack;
+                    }
+                }
+                else
+                {
+                    CurrentState = WaspStates.Chase; 
                 }
             }
-            else
-            {
-                CurrentState = EnemyStates.Chase;
-            }
-                Debug.DrawRay(transform.position, (playerLastPosition - transform.position), Color.red);
         }
     }
 
@@ -104,7 +100,7 @@ public class WaspBehaviour : MonoBehaviour
     {
         if (collision.gameObject.layer == 3 || collision.gameObject.layer == 0 )
         {
-            CurrentState = EnemyStates.Reposition;
+            CurrentState = WaspStates.Reposition;
             
             //SI LAYER 3 DAÑO PLAYER
         }
@@ -124,11 +120,11 @@ public class WaspBehaviour : MonoBehaviour
         //yield return new WaitForSeconds(ShootRate);
 
         yield return new WaitForSeconds(4);
-        CurrentState = EnemyStates.Reposition;
+        CurrentState = WaspStates.Reposition;
     }
     private void Attack()
     {
-        //Debug.Log("ataco");
+       
         isAttacking = true;
         //attackDirection = playerLastPosition - transform.position;
         //transform.position = Vector3.MoveTowards(transform.position, playerLastPosition, 15);
@@ -137,7 +133,7 @@ public class WaspBehaviour : MonoBehaviour
     }
     private void Chase()
     {
-        transform.position = Vector3.Lerp(transform.position, new Vector3(playerLastPosition.x, transform.position.y, playerLastPosition.z), 0.004f);
+        transform.position = Vector3.Lerp(transform.position, new Vector3(playerLastPosition.x, transform.position.y, playerLastPosition.z), 0.003f);
         CanAttack = true;
     }
     private void Reposition()
@@ -146,7 +142,7 @@ public class WaspBehaviour : MonoBehaviour
         Vector3 dist = transform.position - waspPositionBeforeAttack;
         if (dist.magnitude < 0.5f)
         {
-            CurrentState = EnemyStates.Chase;
+            CurrentState = WaspStates.Chase;
             CanAttack = true ;
         }
     }

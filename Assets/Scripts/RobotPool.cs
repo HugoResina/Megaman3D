@@ -27,7 +27,8 @@ public class RobotPool : MonoBehaviour
 
     private void AddBulletToPool(RobotBullet prefab)
     {
-        RobotBullet bullet = Instantiate(prefab, transform);
+       
+        RobotBullet bullet = Instantiate(prefab);
         bullet.Initialize(this);
         bullet.gameObject.SetActive(false);
         pool.Enqueue(bullet);
@@ -35,15 +36,20 @@ public class RobotPool : MonoBehaviour
 
     public RobotBullet GetBullet()
     {
-        foreach (RobotBullet bullet in pool)
+        //foreach (RobotBullet bullet in pool)
+        //{
+        //    if (!bullet.gameObject.activeInHierarchy)
+        //    {
+        //        pool.Dequeue();
+        //        return bullet;
+        //    }
+        //}
+        if(pool.Count > 0)
         {
-            if (!bullet.gameObject.activeInHierarchy)
-            {
-                pool.Dequeue();
-                return bullet;
-            }
+            RobotBullet bullet = pool.Dequeue();
+          
+            return bullet;
         }
-
         return null;
     }
 

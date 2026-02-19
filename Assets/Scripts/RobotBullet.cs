@@ -1,12 +1,13 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 public class RobotBullet : MonoBehaviour
 {
     private Rigidbody rb;
     private RobotPool pool;
     private Coroutine returnCoroutine;
-   
+    private float ExplosionRadius = 2f;
     private float RocketDamage = 25f;
 
    
@@ -25,9 +26,14 @@ public class RobotBullet : MonoBehaviour
     public void Shoot(Vector3 direction, float speed, float lifeTime)
     {
         gameObject.SetActive(true);
+
+       
+        rb.isKinematic = false;
+        rb.WakeUp(); 
+
+       
         rb.linearVelocity = direction * speed;
 
-        // Guardamos la coroutine para poder cancelarla
         returnCoroutine = StartCoroutine(ReturnAfterTime(lifeTime));
     }
 
@@ -38,18 +44,28 @@ public class RobotBullet : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        Health health = collision.gameObject.GetComponent<Health>();
-        if (health != null)
+ 
+
+        ExplosionDamage(transform.position, ExplosionRadius);
+        ReturnToPool();
+    }
+
+    void ExplosionDamage(Vector3 center, float radius)
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(center, radius);
+        foreach (var hitCollider in hitColliders)
         {
-            float damage = RocketDamage;
-            health.TakeDamage(damage);
-        }
-        if (!collision.gameObject.CompareTag("Player") && collision.gameObject.layer != 7)
-        {
-            ReturnToPool();
+            if(hitCollider.gameObject.layer == 3)
+            Debug.Log("Impactado: " + hitCollider.name);
+            
         }
     }
 
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, ExplosionRadius);
+    }
     private void ReturnToPool()
     {
         if (returnCoroutine != null)
@@ -64,6 +80,8 @@ public class RobotBullet : MonoBehaviour
     public void Deactivate()
     {
         rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero; 
+        rb.isKinematic = true; 
         gameObject.SetActive(false);
     }
 }

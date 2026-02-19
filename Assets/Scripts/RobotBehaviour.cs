@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public enum RobotStates
@@ -19,6 +20,7 @@ public class RobotBehaviour : MonoBehaviour
     RobotStates CurrentState;
     RobotShooter shooter;
     Transform[] route;
+    private float nextShootTime = 1f;
     void Start()
     {
         CurrentState = RobotStates.patrol;
@@ -27,7 +29,8 @@ public class RobotBehaviour : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("bot" + CurrentState);
+        Debug.Log("puedo atacar: " + CanAttack);
+        //Debug.Log("bot" + CurrentState);
         
         switch (CurrentState)
         {
@@ -69,8 +72,9 @@ public class RobotBehaviour : MonoBehaviour
                     {
                        
                         CurrentState = RobotStates.Attack;
-                        CanAttack = false;
+                       
                         Attack();
+                        CanAttack = false;
 
                     }
 
@@ -87,14 +91,23 @@ public class RobotBehaviour : MonoBehaviour
     }
     public void Attack()
     {
-        //instancia bullet
-        shooter.ChooseProj();
 
-
-
+        if (CanAttack)
+        {
+            shooter.Shoot();
+        //nextShootTime = Time.time + ShootRate; 
+        StartCoroutine(ShootCooldown());
+        }
     }
     public void Patrol()
     {
         //se mueve periodicamente entre los puntos de route
+    }
+    public IEnumerator ShootCooldown()
+    {
+        CanAttack = false;
+        yield return new WaitForSeconds(3f);
+        CanAttack = true;
+        
     }
 }

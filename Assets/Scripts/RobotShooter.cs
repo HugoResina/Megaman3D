@@ -12,29 +12,20 @@ public class RobotShooter : MonoBehaviour
     public float projectileLife = 3f;
     public float projectileSpeed = 20f;
 
-    public void ChooseProj()
+   
+    public void Shoot()
     {
-        //Debug.Log($"Time Pressed: {timePressed}");
-        
-
-       
-
-        Shoot();
-    }
-
-    private void Shoot()
-    {
-        RobotBullet bullet = pool.GetBullet();
-
-        if (bullet == null)
-            return;
-        foreach(Transform shootPoint in shootPoints)
+        foreach (Transform shootPoint in shootPoints)
         {
-            bullet.transform.position = shootPoint.position;
-            bullet.transform.rotation = shootPoint.rotation;
+          
+            RobotBullet bullet = pool.GetBullet();
 
-            bullet.Shoot(shootPoint.forward, projectileSpeed, projectileLife);
+            if (bullet != null)
+            {
+                bullet.transform.position = shootPoint.position;
+                bullet.transform.rotation = shootPoint.rotation;
+                bullet.Shoot(shootPoint.forward, projectileSpeed, projectileLife);
+            }
         }
-       
     }
 }

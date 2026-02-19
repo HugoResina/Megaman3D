@@ -65,23 +65,18 @@ public class PlayerMovement : MonoBehaviour
     {
         PlayerInputs.HasInteracted -= Interact;
     }
+    private void FixedUpdate()
+    {
+        
+    }
     private void Update()
     {
         IsGroundedAndWalls();
 
         Jump();
         CutJump();
+
         Movement();
-
-
-        //Debug.Log(verticalVelocity);
-
-        isItem = Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward, out hit, 3f, ItemLayer);
-        isDoor = Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward, out hit, 3f, DoorLayer);
-        //Debug.Log(isDoor);
-        //Debug.Log(UIManager.Instance.InteractText.gameObject.activeInHierarchy);
-        UIManager.Instance.InteractText.gameObject.SetActive(isItem);
-        //Debug.DrawRay(_playerCamera.transform.position, _playerCamera.transform.forward, Color.red);
 
     }
 
@@ -104,33 +99,24 @@ public class PlayerMovement : MonoBehaviour
 
     private void Movement()
     {
-        float speed = moveSpeed;
+       
 
-        float horizontal = _playerInputs.MoveInput.x * speed;
-        float vertical = _playerInputs.MoveInput.y * speed;
+        Vector3 moveDir = new Vector3(_playerInputs.MoveInput.x, 0, _playerInputs.MoveInput.y);
+        moveDir = transform.TransformDirection(moveDir) * moveSpeed;
 
-        Vector3 move = new Vector3(horizontal, 0, vertical);
-        move = transform.rotation * move;
-
-
-
-
-
-        verticalVelocity -= 0.1f;
-        if (verticalVelocity <= -2f && _isGrabbedToWall && !_isGrounded)
+        if (_isGrounded && verticalVelocity < 0)
         {
-            verticalVelocity = -1f;
-        }
-        else if (verticalVelocity <= -15f)
-        {
-            verticalVelocity = -10f;
+            verticalVelocity = -2f;
         }
 
+        verticalVelocity -= gravity * Time.deltaTime;
 
+        if (verticalVelocity < -20f) verticalVelocity = -20f;
 
-        move.y = verticalVelocity;
+        Vector3 finalVelocity = moveDir;
+        finalVelocity.y = verticalVelocity;
 
-        _characterController.Move(move * Time.deltaTime);
+        _characterController.Move(finalVelocity * Time.deltaTime);
     }
 
     private void Look()
@@ -158,7 +144,6 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (isDoor)
         {
-            //Debug.Log(GayManager.Instance.HasKey ? "Obro porta": "Falta clau");
             if (GayManager.Instance.HasKey)
             {
                 Debug.Log("Abro");

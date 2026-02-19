@@ -22,6 +22,8 @@ public class Health : MonoBehaviour
     private bool canTakeDamage = true;
     [SerializeField]
     private bool isRegenerating = false;
+    [SerializeField]
+    private UIManager uiManager;
 
     private void Start()
     {
@@ -52,6 +54,8 @@ public class Health : MonoBehaviour
             lastRegenTime = Time.time;
             UpdateHealthBar();
         }
+        //Debug.Log($"Health updated: {uiManager.HealthBarFill.fillAmount}");
+        //Debug.Log($"Current Health: {currentHealth}");
     }
 
     public void TakeDamage(float damageAmount)
@@ -80,10 +84,11 @@ public class Health : MonoBehaviour
 
     private void UpdateHealthBar()
     {
-        if (UIManager.Instance != null && UIManager.Instance.HealthBarFill != null)
+        //Debug.Log($"Updating health bar: Current Health = {currentHealth}, Max Health = {maxHealth}");
+        if (uiManager != null)
         {
-            float healthPercent = currentHealth / maxHealth;
-            UIManager.Instance.HealthBarFill.fillAmount = healthPercent;
+            uiManager.HealthBarFill.fillAmount = currentHealth / maxHealth;
+            Debug.Log($"Health bar fill amount set to: {uiManager.HealthBarFill.fillAmount}");
         }
     }
 }

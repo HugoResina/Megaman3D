@@ -16,7 +16,10 @@ public class RobotBullet : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
     }
-
+    private void Update()
+    {
+       
+    }
     public void Initialize( RobotPool poolReference)
     {
         
@@ -27,7 +30,7 @@ public class RobotBullet : MonoBehaviour
     {
         gameObject.SetActive(true);
 
-       
+        
         rb.isKinematic = false;
         rb.WakeUp(); 
 

@@ -13,7 +13,7 @@ public class RobotShooter : MonoBehaviour
     public float projectileSpeed = 20f;
 
    
-    public void Shoot()
+    public void Shoot(Transform objectiu)
     {
         foreach (Transform shootPoint in shootPoints)
         {
@@ -22,9 +22,10 @@ public class RobotShooter : MonoBehaviour
 
             if (bullet != null)
             {
+                Vector3 dir = objectiu.position - transform.position;
                 bullet.transform.position = shootPoint.position;
                 bullet.transform.rotation = shootPoint.rotation;
-                bullet.Shoot(shootPoint.forward, projectileSpeed, projectileLife);
+                bullet.Shoot(dir , projectileSpeed, projectileLife);
             }
         }
     }

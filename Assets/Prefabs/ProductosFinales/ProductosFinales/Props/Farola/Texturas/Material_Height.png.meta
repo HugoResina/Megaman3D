@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Prefabs/ProductosFinales/ProductosFinales/Props/Farola/Texturas/Material_Height.png.meta
+guid: 1f6663fb92f21fb419d99053de4c67e0
+=======
 guid: 4a32a587f6eb6184894ba4e9e29acbf9
+>>>>>>> origin/main:Assets/Prefabs/ProductosFinales/ProductosFinales/Props/Falola/Texturas/Material_Height.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}

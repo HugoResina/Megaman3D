@@ -22,19 +22,22 @@ public class RobotBehaviour : MonoBehaviour
     RobotShooter shooter;
     [SerializeField]
     Transform[] route;
+    public bool isAttacking = false;
+    private Animator _animator;
     
     private int PatrolIndex = 0;
     void Start()
     {
         CurrentState = RobotStates.patrol;
         shooter = GetComponent<RobotShooter>();
+        _animator = GetComponent<Animator>();
     }
 
     void Update()
     {
-        Debug.Log("puedo atacar: " + CanAttack);
-        //Debug.Log("bot" + CurrentState);
-        
+        //Debug.Log("puedo atacar: " + CanAttack);
+        Debug.Log("bot" + CurrentState);
+
         switch (CurrentState)
         {
 
@@ -55,15 +58,18 @@ public class RobotBehaviour : MonoBehaviour
     {
         if (other.gameObject.layer == 3)
         {
+            isAttacking = true;
+            _animator.SetBool("isAttacking", isAttacking);
             RaycastHit hit;
             Vector3 direction = (other.transform.position - transform.position);
-
+            
 
             
 
             if (Physics.Raycast(transform.position, direction, out hit))
             {
                 Debug.DrawRay(transform.position, direction * lookDistance, Color.red);
+
                 
                 
 
@@ -86,7 +92,7 @@ public class RobotBehaviour : MonoBehaviour
                 }
                 else
                 {
-
+                    
                     CurrentState = RobotStates.patrol;
                     Patrol();
                 }
@@ -96,6 +102,9 @@ public class RobotBehaviour : MonoBehaviour
         else
         {
             CurrentState = RobotStates.patrol;
+            isAttacking = false;
+            _animator.SetBool("isAttacking", isAttacking);
+
         }
     }
     public void Attack(Transform objectiu)
@@ -111,16 +120,22 @@ public class RobotBehaviour : MonoBehaviour
     public void Patrol()
     {
 
-        Vector3 CurrentPoint = route[PatrolIndex % route.Length].position ;
-        CurrentPoint.y = 0f;
-        
+        if (!isAttacking)
+        {
+
+
+            Vector3 CurrentPoint = route[PatrolIndex % route.Length].position;
+            CurrentPoint.y = 0f;
+
             Vector3 posToGoTo = new Vector3(CurrentPoint.x, transform.position.y, CurrentPoint.z);
             transform.position = Vector3.MoveTowards(transform.position, posToGoTo, 0.45f * Time.deltaTime);
             transform.LookAt(posToGoTo);
-        if (Vector3.Distance(transform.position, posToGoTo) < 0.05f)
+            if (Vector3.Distance(transform.position, posToGoTo) < 0.05f)
             {
-            PatrolIndex++;
+                PatrolIndex++;
             }
+
+        }
         
     }
     public IEnumerator ShootCooldown()

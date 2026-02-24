@@ -93,6 +93,10 @@ public class RobotBehaviour : MonoBehaviour
                 
             }
         }
+        else
+        {
+            CurrentState = RobotStates.patrol;
+        }
     }
     public void Attack(Transform objectiu)
     {
@@ -107,15 +111,15 @@ public class RobotBehaviour : MonoBehaviour
     public void Patrol()
     {
 
-        Vector3 CurrentPoint = route[PatrolIndex].position;
+        Vector3 CurrentPoint = route[PatrolIndex % route.Length].position ;
         CurrentPoint.y = 0f;
         
-
-            transform.position = Vector3.MoveTowards(transform.position, CurrentPoint, 2f * Time.deltaTime);
-            transform.LookAt(CurrentPoint);
-            if(Vector3.Distance(transform.position, CurrentPoint) < 0.05f)
+            Vector3 posToGoTo = new Vector3(CurrentPoint.x, transform.position.y, CurrentPoint.z);
+            transform.position = Vector3.MoveTowards(transform.position, posToGoTo, 2f * Time.deltaTime);
+            transform.LookAt(posToGoTo);
+        if (Vector3.Distance(transform.position, posToGoTo) < 0.05f)
             {
-                PatrolIndex = (PatrolIndex +1) % route.Length +1;
+            PatrolIndex++;
             }
         
     }

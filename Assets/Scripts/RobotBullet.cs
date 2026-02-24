@@ -9,8 +9,8 @@ public class RobotBullet : MonoBehaviour
     private Coroutine returnCoroutine;
     private float ExplosionRadius = 2f;
     private float RocketDamage = 25f;
-
-   
+    private bool isHit = false;
+    public LayerMask playerLayer;
 
     private void Awake()
     {
@@ -28,6 +28,7 @@ public class RobotBullet : MonoBehaviour
 
     public void Shoot(Vector3 direction, float speed, float lifeTime)
     {
+        isHit  = false;
         gameObject.SetActive(true);
 
         
@@ -47,7 +48,8 @@ public class RobotBullet : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
- 
+        if (isHit) return; 
+        isHit = true;
 
         ExplosionDamage(transform.position, ExplosionRadius);
         ReturnToPool();
@@ -55,12 +57,22 @@ public class RobotBullet : MonoBehaviour
 
     void ExplosionDamage(Vector3 center, float radius)
     {
-        Collider[] hitColliders = Physics.OverlapSphere(center, radius);
+        Collider[] hitColliders = Physics.OverlapSphere(center, radius, playerLayer);
+        System.Collections.Generic.List<GameObject> objectsHit = new System.Collections.Generic.List<GameObject>();
+
         foreach (var hitCollider in hitColliders)
         {
-            if(hitCollider.gameObject.layer == 3)
-            Debug.Log("Impactado: " + hitCollider.name);
-            
+            GameObject rootEntity = hitCollider.attachedRigidbody != null
+                                    ? hitCollider.attachedRigidbody.gameObject
+                                    : hitCollider.gameObject;
+
+            if (!objectsHit.Contains(rootEntity))
+            {
+                Debug.Log("Impactado: " + rootEntity.name);
+
+
+                objectsHit.Add(rootEntity);
+            }
         }
     }
 

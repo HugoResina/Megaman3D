@@ -126,6 +126,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c27aa916314282e438a8fdac0ca348d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RobotBullet
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!54 &8310717422739303043
 Rigidbody:
   m_ObjectHideFlags: 0

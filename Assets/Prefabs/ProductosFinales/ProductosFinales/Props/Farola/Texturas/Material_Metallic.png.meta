@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Prefabs/ProductosFinales/ProductosFinales/Props/Farola/Texturas/Material_Metallic.png.meta
 guid: aee6dc585e6c40248a90c7fad9fc968f
+=======
+guid: 54825f9351ce2ad448fca14bdc72b743
+>>>>>>> origin/main:Assets/Prefabs/ProductosFinales/ProductosFinales/Props/Falola/Texturas/Material_Metallic.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}

@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Prefabs/ProductosFinales/ProductosFinales/Props/Farola/Texturas/Material_Roughness.png.meta
 guid: 9fe6cceb7249eb347ba813f62302e7e1
+=======
+guid: 9edcd34ad99300a47be4eb73ba5d4e4a
+>>>>>>> origin/main:Assets/Prefabs/ProductosFinales/ProductosFinales/Props/Falola/Texturas/Material_Roughness.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}

@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Prefabs/ProductosFinales/ProductosFinales/Props/Farola/Texturas/Material_Normal.png.meta
 guid: 8e3dbd35099d4594f9a218d1aa74730a
+=======
+guid: 8d6fc1b6b78ed584a86ef6bbc1f7cd80
+>>>>>>> origin/main:Assets/Prefabs/ProductosFinales/ProductosFinales/Props/Falola/Texturas/Material_Normal.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}

@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Prefabs/ProductosFinales/ProductosFinales/Props/Farola/Farola.fbx.meta
 guid: 81903dba7d74fef4e95c6c293979e1df
+=======
+guid: adaed1d9a4165e841b64bf6128451b0c
+>>>>>>> origin/main:Assets/Prefabs/ProductosFinales/ProductosFinales/Props/Falola/Farola.fbx.meta
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []

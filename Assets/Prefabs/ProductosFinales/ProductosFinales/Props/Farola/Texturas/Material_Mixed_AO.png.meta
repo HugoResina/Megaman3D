@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Prefabs/ProductosFinales/ProductosFinales/Props/Farola/Texturas/Material_Mixed_AO.png.meta
 guid: 238efc2d910b21e41b4da1a61ea1d3c2
+=======
+guid: 5cbf04dabeb048243a8530f4378c7662
+>>>>>>> origin/main:Assets/Prefabs/ProductosFinales/ProductosFinales/Props/Falola/Texturas/Material_Mixed_AO.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}

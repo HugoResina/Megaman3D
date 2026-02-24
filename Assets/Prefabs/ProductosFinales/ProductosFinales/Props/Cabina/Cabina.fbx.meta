@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: ffe16ec668ed4394f99d607f26f92ded
+=======
+guid: e188bd987859a7b40a218ab68d5be122
+>>>>>>> origin/main
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []

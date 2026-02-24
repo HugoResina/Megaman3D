@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum RobotStates
@@ -18,7 +20,10 @@ public class RobotBehaviour : MonoBehaviour
     private float lookDistance = 8f;
     RobotStates CurrentState;
     RobotShooter shooter;
+    [SerializeField]
     Transform[] route;
+    private float nextShootTime = 1f;
+    private int PatrolIndex = 0;
     void Start()
     {
         CurrentState = RobotStates.patrol;
@@ -27,16 +32,18 @@ public class RobotBehaviour : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("bot" + CurrentState);
+        Debug.Log("puedo atacar: " + CanAttack);
+        //Debug.Log("bot" + CurrentState);
         
         switch (CurrentState)
         {
 
             case RobotStates.Attack:
-                Attack();
+               
                 break;
             
             case RobotStates.patrol:
+                Patrol();
                 break;
 
             default:
@@ -63,14 +70,16 @@ public class RobotBehaviour : MonoBehaviour
                 if (hit.collider.gameObject.layer == 3)
                 {
                     playerLastPosition = other.transform.position;
+                    playerLastPosition.y = 0f;
                     transform.LookAt(playerLastPosition);
 
                     if (CanAttack)
                     {
                        
                         CurrentState = RobotStates.Attack;
+                       
+                        Attack(other.transform);
                         CanAttack = false;
-                        Attack();
 
                     }
 
@@ -85,16 +94,36 @@ public class RobotBehaviour : MonoBehaviour
             }
         }
     }
-    public void Attack()
+    public void Attack(Transform objectiu)
     {
-        //instancia bullet
-        shooter.ChooseProj();
 
-
-
+        if (CanAttack)
+        {
+            shooter.Shoot(objectiu);
+            //nextShootTime = Time.time + ShootRate; 
+            StartCoroutine(ShootCooldown());
+        }
     }
     public void Patrol()
     {
-        //se mueve periodicamente entre los puntos de route
+
+        Vector3 CurrentPoint = route[PatrolIndex].position;
+        CurrentPoint.y = 0f;
+        
+
+            transform.position = Vector3.MoveTowards(transform.position, CurrentPoint, 2f * Time.deltaTime);
+            transform.LookAt(CurrentPoint);
+            if(Vector3.Distance(transform.position, CurrentPoint) < 0.05f)
+            {
+                PatrolIndex = (PatrolIndex +1) % route.Length +1;
+            }
+        
+    }
+    public IEnumerator ShootCooldown()
+    {
+        CanAttack = false;
+        yield return new WaitForSeconds(3f);
+        CanAttack = true;
+        
     }
 }

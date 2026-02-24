@@ -9,11 +9,11 @@ public enum RobotStates
 }
 public class RobotBehaviour : MonoBehaviour
 {
-    private float ShootRate = 1f;
+    
     private bool CanAttack = true;
-    private bool isAttacking = false;
+   
     private Vector3 playerLastPosition;
-    private Vector3 attackDirection;
+    
     [SerializeField]
     private LayerMask PlayerLayer;
     [SerializeField]
@@ -22,7 +22,7 @@ public class RobotBehaviour : MonoBehaviour
     RobotShooter shooter;
     [SerializeField]
     Transform[] route;
-    private float nextShootTime = 1f;
+    
     private int PatrolIndex = 0;
     void Start()
     {
@@ -115,7 +115,7 @@ public class RobotBehaviour : MonoBehaviour
         CurrentPoint.y = 0f;
         
             Vector3 posToGoTo = new Vector3(CurrentPoint.x, transform.position.y, CurrentPoint.z);
-            transform.position = Vector3.MoveTowards(transform.position, posToGoTo, 2f * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, posToGoTo, 0.45f * Time.deltaTime);
             transform.LookAt(posToGoTo);
         if (Vector3.Distance(transform.position, posToGoTo) < 0.05f)
             {

@@ -10,7 +10,7 @@ public enum RobotStates
 public class RobotBehaviour : MonoBehaviour
 {
     
-    private bool CanAttack = true;
+    private bool CanAttack = false;
    
     private Vector3 playerLastPosition;
     
@@ -24,6 +24,8 @@ public class RobotBehaviour : MonoBehaviour
     Transform[] route;
     public bool isAttacking = false;
     private Animator _animator;
+    [SerializeField]
+    private Transform LookPoint;
     
     private int PatrolIndex = 0;
     void Start()
@@ -35,8 +37,7 @@ public class RobotBehaviour : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log("puedo atacar: " + CanAttack);
-        Debug.Log("bot" + CurrentState);
+        //Debug.Log("bot" + CurrentState);
 
         switch (CurrentState)
         {
@@ -56,25 +57,24 @@ public class RobotBehaviour : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.layer == 3)
-        {
-            isAttacking = true;
-            _animator.SetBool("isAttacking", isAttacking);
+       
+           
             RaycastHit hit;
-            Vector3 direction = (other.transform.position - transform.position);
-            
+            Vector3 direction = (other.transform.position - LookPoint.position);
+            Physics.Raycast(LookPoint.position, direction, out hit);
 
-            
-
-            if (Physics.Raycast(transform.position, direction, out hit))
+            if(hit.transform.gameObject.layer != 3)
             {
-                Debug.DrawRay(transform.position, direction * lookDistance, Color.red);
-
-                
-                
-
-                if (hit.collider.gameObject.layer == 3)
-                {
+                CanAttack = false;
+                _animator.SetBool("isAttacking", false);
+                isAttacking = false;
+                CurrentState = RobotStates.patrol;
+                Patrol();
+            }
+            else if(hit.transform.gameObject.layer == 3)//  && other.gameObject.layer == 3)
+            {
+                    isAttacking = true;
+                    _animator.SetBool("isAttacking", true);
                     playerLastPosition = other.transform.position;
                     playerLastPosition.y = 0f;
                     transform.LookAt(playerLastPosition);
@@ -89,32 +89,29 @@ public class RobotBehaviour : MonoBehaviour
 
                     }
 
-                }
-                else
-                {
-                    
-                    CurrentState = RobotStates.patrol;
-                    Patrol();
-                }
-                
             }
-        }
-        else
+            
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.gameObject.layer == 3)
         {
-            CurrentState = RobotStates.patrol;
+            CanAttack = false;
+            _animator.SetBool("isAttacking", false);
             isAttacking = false;
-            _animator.SetBool("isAttacking", isAttacking);
-
+            CurrentState = RobotStates.patrol;
+            Patrol();
         }
     }
+   
+
     public void Attack(Transform objectiu)
     {
 
         if (CanAttack)
         {
             shooter.Shoot(objectiu);
-            //nextShootTime = Time.time + ShootRate; 
-            StartCoroutine(ShootCooldown());
+            //StartCoroutine(ShootCooldown());
         }
     }
     public void Patrol()
@@ -138,11 +135,15 @@ public class RobotBehaviour : MonoBehaviour
         }
         
     }
-    public IEnumerator ShootCooldown()
-    {
-        CanAttack = false;
-        yield return new WaitForSeconds(3f);
-        CanAttack = true;
+    //public IEnumerator ShootCooldown()
+    //{
+    //    CanAttack = false;
+    //    yield return new WaitForSeconds(3f);
         
+        
+    //}
+    public void SyncShootAnimation()
+    {
+        CanAttack = true;
     }
 }

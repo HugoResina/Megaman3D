@@ -48,7 +48,7 @@ public class WaspBehaviour : MonoBehaviour
                 break;
             case WaspStates.Attack:
                 //asdf
-                //distCovered = (Time.time - startTime) * speed;
+         
                 fracJourney = 0.008f;
                 //Debug.Log("cuanto? " +  fracJourney);
                 Attack();
@@ -90,7 +90,7 @@ public class WaspBehaviour : MonoBehaviour
                 }
                 else
                 {
-                    CurrentState = WaspStates.Chase; 
+                    CurrentState = WaspStates.Reposition; 
                 }
             }
         }
@@ -101,7 +101,7 @@ public class WaspBehaviour : MonoBehaviour
         if (collision.gameObject.layer == 3 || collision.gameObject.layer == 0 )
         {
             CurrentState = WaspStates.Reposition;
-            
+            Debug.Log("toma hostia");
             //SI LAYER 3 DAÑO PLAYER
         }
     }
@@ -142,7 +142,7 @@ public class WaspBehaviour : MonoBehaviour
         Vector3 dist = transform.position - waspPositionBeforeAttack;
         if (dist.magnitude < 0.5f)
         {
-            CurrentState = WaspStates.Chase;
+            CurrentState = WaspStates.Idle;
             CanAttack = true ;
         }
     }

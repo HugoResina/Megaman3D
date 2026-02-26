@@ -125,4 +125,9 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
             HasInteracted?.Invoke();
         }
     }
+
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        throw new NotImplementedException();
+    }
 }

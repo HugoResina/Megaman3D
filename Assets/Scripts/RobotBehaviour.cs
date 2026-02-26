@@ -56,13 +56,14 @@ public class RobotBehaviour : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-       
-           
+
+        
+        {
             RaycastHit hit;
             Vector3 direction = (other.transform.position - LookPoint.position);
-            Physics.Raycast(LookPoint.position, direction, out hit);
+            Physics.Raycast(LookPoint.position, direction, out hit, 10000f, ~7);
 
-            if(hit.transform.gameObject.layer != 3)
+            if (hit.transform.gameObject.layer != 3 && hit.transform.gameObject.layer != 7)
             {
                 CanAttack = false;
                 _animator.SetBool("isAttacking", false);
@@ -70,25 +71,26 @@ public class RobotBehaviour : MonoBehaviour
                 CurrentState = RobotStates.patrol;
                 Patrol();
             }
-            else if(hit.transform.gameObject.layer == 3)
+            else if (hit.transform.gameObject.layer == 3)
             {
-                    isAttacking = true;
-                    _animator.SetBool("isAttacking", true);
-                    playerLastPosition = other.transform.position;
-                    playerLastPosition.y = 0f;
-                    transform.LookAt(playerLastPosition);
+                isAttacking = true;
+                _animator.SetBool("isAttacking", true);
+                playerLastPosition = other.transform.position;
+                playerLastPosition.y = 0f;
+                transform.LookAt(playerLastPosition);
 
-                    if (CanAttack)
-                    {
-                       
-                        CurrentState = RobotStates.Attack;
-                       
-                        Attack(other.transform);
-                        CanAttack = false;
+                if (CanAttack)
+                {
 
-                    }
+                    CurrentState = RobotStates.Attack;
+
+                    Attack(other.transform);
+                    CanAttack = false;
+
+                }
 
             }
+        }
             
     }
     private void OnTriggerExit(Collider other)

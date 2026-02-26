@@ -33,8 +33,8 @@ public class PlayerMovement : MonoBehaviour
     public float jumpCutMultiplier = 0.5f;
 
 
-    bool isItem = false;
-    bool isDoor = false;
+    bool isItem = true;
+    bool isDoor = true;
     public LayerMask JumpableLayer;
     public LayerMask ItemLayer;
     public LayerMask DoorLayer;

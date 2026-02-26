@@ -125,7 +125,7 @@ public class RobotBehaviour : MonoBehaviour
             CurrentPoint.y = 0f;
 
             Vector3 posToGoTo = new Vector3(CurrentPoint.x, transform.position.y, CurrentPoint.z);
-            transform.position = Vector3.MoveTowards(transform.position, posToGoTo, 0.45f * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, posToGoTo, 0.9f * Time.deltaTime);
             transform.LookAt(posToGoTo);
             if (Vector3.Distance(transform.position, posToGoTo) < 0.05f)
             {

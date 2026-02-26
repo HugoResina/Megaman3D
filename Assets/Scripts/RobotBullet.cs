@@ -7,7 +7,7 @@ public class RobotBullet : MonoBehaviour
     private Rigidbody rb;
     private RobotPool pool;
     private Coroutine returnCoroutine;
-    private float ExplosionRadius = 2f;
+    private float ExplosionRadius = 1f;
     private float RocketDamage = 25f;
     private bool isHit = false;
     public LayerMask playerLayer;

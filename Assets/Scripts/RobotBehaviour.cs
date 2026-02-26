@@ -37,7 +37,6 @@ public class RobotBehaviour : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log("bot" + CurrentState);
 
         switch (CurrentState)
         {
@@ -71,7 +70,7 @@ public class RobotBehaviour : MonoBehaviour
                 CurrentState = RobotStates.patrol;
                 Patrol();
             }
-            else if(hit.transform.gameObject.layer == 3)//  && other.gameObject.layer == 3)
+            else if(hit.transform.gameObject.layer == 3)
             {
                     isAttacking = true;
                     _animator.SetBool("isAttacking", true);
@@ -111,7 +110,6 @@ public class RobotBehaviour : MonoBehaviour
         if (CanAttack)
         {
             shooter.Shoot(objectiu);
-            //StartCoroutine(ShootCooldown());
         }
     }
     public void Patrol()
@@ -135,13 +133,7 @@ public class RobotBehaviour : MonoBehaviour
         }
         
     }
-    //public IEnumerator ShootCooldown()
-    //{
-    //    CanAttack = false;
-    //    yield return new WaitForSeconds(3f);
-        
-        
-    //}
+   
     public void SyncShootAnimation()
     {
         CanAttack = true;

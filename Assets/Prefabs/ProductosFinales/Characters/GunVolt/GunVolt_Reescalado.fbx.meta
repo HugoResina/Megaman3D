@@ -60,7 +60,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|ArmatureAction (1)
+      name: NoUsar
       takeName: Armature|ArmatureAction
       internalID: -2674958278859614444
       firstFrame: 0

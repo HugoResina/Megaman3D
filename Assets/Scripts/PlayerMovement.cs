@@ -33,8 +33,8 @@ public class PlayerMovement : MonoBehaviour
     public float jumpCutMultiplier = 0.5f;
 
 
-    bool isItem = true;
-    bool isDoor = true;
+    bool isItem = false;
+    bool isDoor = false;
     public LayerMask JumpableLayer;
     public LayerMask ItemLayer;
     public LayerMask DoorLayer;
@@ -138,6 +138,7 @@ public class PlayerMovement : MonoBehaviour
 
             bool hititem;
             hititem = Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward, out a, 3f, ItemLayer);
+
             Debug.Log("Interactuo con item");
             a.transform.gameObject.SetActive(false);
             GayManager.Instance.HasKey = true;

@@ -78,7 +78,7 @@ public class WaspBehaviour : MonoBehaviour
                 {
                     if (CanAttack)
                     {
-                        Debug.Log("¡Iniciando Ataque!");
+                        
                         StartAttackSequence();
                     }
                     else
@@ -110,6 +110,7 @@ public class WaspBehaviour : MonoBehaviour
     {
      
         transform.position = Vector3.MoveTowards(transform.position, playerLastPosition, speed * Time.deltaTime * 8);
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -117,19 +118,10 @@ public class WaspBehaviour : MonoBehaviour
         if (collision.gameObject.layer == 3 || collision.gameObject.layer == 0)
         {
             CurrentState = WaspStates.Reposition;
-            Debug.Log("toma hostia");
+            
         }
     }
-    //private IEnumerator ShootPlayer()
-    //{
-      
-
-    //    var waitForGrounded = new WaitUntil(() => CanAttack);
-
-
-    //    yield return new WaitForSeconds(ShootRate);
-    //    CanAttack = true;
-    //}
+   
     private IEnumerator RecoverTimeFromAttack()
     {
        
@@ -145,10 +137,13 @@ public class WaspBehaviour : MonoBehaviour
     }
     private void Reposition()
     {
-        transform.position = Vector3.Lerp(transform.position, waspPositionBeforeAttack, 0.004f);
+        transform.position = Vector3.MoveTowards(transform.position, waspPositionBeforeAttack, speed * Time.deltaTime * 4);
         Vector3 dist = transform.position - waspPositionBeforeAttack;
         if (dist.magnitude < 0.5f)
         {
+            //transform.LookAt(new Vector3(playerLastPosition.x, transform.rotation.y, playerLastPosition.z));
+            //transform.rotation = Quaternion.Euler(playerLastPosition.x, 0, playerLastPosition.z);
+
             CurrentState = WaspStates.Idle;
             CanAttack = true;
         }

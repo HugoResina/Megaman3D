@@ -128,6 +128,7 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     public void OnPause(InputAction.CallbackContext context)
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
+        Debug.Log("pausaria");
     }
 }

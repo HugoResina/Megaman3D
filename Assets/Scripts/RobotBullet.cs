@@ -11,6 +11,7 @@ public class RobotBullet : MonoBehaviour
     private float RocketDamage = 25f;
     private bool isHit = false;
     public LayerMask playerLayer;
+    public GameObject Explosion;
 
     private void Awake()
     {
@@ -52,11 +53,13 @@ public class RobotBullet : MonoBehaviour
         isHit = true;
 
         ExplosionDamage(transform.position, ExplosionRadius);
+        Instantiate(Explosion, transform.position, Quaternion.identity);
         ReturnToPool();
     }
 
     void ExplosionDamage(Vector3 center, float radius)
     {
+        
         Collider[] hitColliders = Physics.OverlapSphere(center, radius, playerLayer);
         System.Collections.Generic.List<GameObject> objectsHit = new System.Collections.Generic.List<GameObject>();
 

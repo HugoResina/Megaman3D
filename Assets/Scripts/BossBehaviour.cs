@@ -39,7 +39,10 @@ public class BossBehaviour : MonoBehaviour
 
     public float Health = 100;
 
-    void Start() => _animator = GetComponent<Animator>();
+    void Start()
+    {
+        _animator = GetComponent<Animator>();
+    }
 
     void Update()
     {
@@ -215,6 +218,7 @@ public class BossBehaviour : MonoBehaviour
 
         if (canAttack && distance <= attackDistance)
         {
+            EndAction();
             ChangeState(BossStates.Attack);
             return;
         }

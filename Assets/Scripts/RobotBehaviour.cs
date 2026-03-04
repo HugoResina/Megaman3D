@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public enum RobotStates
 {
@@ -9,11 +10,11 @@ public enum RobotStates
 }
 public class RobotBehaviour : MonoBehaviour
 {
-    
+
     private bool CanAttack = false;
-   
+
     private Vector3 playerLastPosition;
-    
+
     [SerializeField]
     private LayerMask PlayerLayer;
     [SerializeField]
@@ -26,7 +27,7 @@ public class RobotBehaviour : MonoBehaviour
     private Animator _animator;
     [SerializeField]
     private Transform LookPoint;
-    
+
     private int PatrolIndex = 0;
     void Start()
     {
@@ -42,9 +43,9 @@ public class RobotBehaviour : MonoBehaviour
         {
 
             case RobotStates.Attack:
-               
+
                 break;
-            
+
             case RobotStates.patrol:
                 Patrol();
                 break;
@@ -57,19 +58,22 @@ public class RobotBehaviour : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
 
-        
+
         {
             RaycastHit hit;
             Vector3 direction = (other.transform.position - LookPoint.position);
-            Physics.Raycast(LookPoint.position, direction, out hit, 10000f, ~7);
+            Physics.Raycast(LookPoint.position, direction, out hit, 10000f);
 
+
+            Debug.Log(hit.transform.gameObject.layer);
+            Debug.DrawRay(LookPoint.position, direction);
             if (hit.transform.gameObject.layer != 3 && hit.transform.gameObject.layer != 7)
             {
                 CanAttack = false;
                 _animator.SetBool("isAttacking", false);
                 isAttacking = false;
                 CurrentState = RobotStates.patrol;
-                Patrol();
+                //Patrol();
             }
             else if (hit.transform.gameObject.layer == 3)
             {
@@ -91,11 +95,11 @@ public class RobotBehaviour : MonoBehaviour
 
             }
         }
-            
+
     }
     private void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.layer == 3)
+        if (other.gameObject.layer == 3)
         {
             CanAttack = false;
             _animator.SetBool("isAttacking", false);
@@ -104,7 +108,7 @@ public class RobotBehaviour : MonoBehaviour
             Patrol();
         }
     }
-   
+
 
     public void Attack(Transform objectiu)
     {
@@ -133,9 +137,9 @@ public class RobotBehaviour : MonoBehaviour
             }
 
         }
-        
+
     }
-   
+
     public void SyncShootAnimation()
     {
         CanAttack = true;

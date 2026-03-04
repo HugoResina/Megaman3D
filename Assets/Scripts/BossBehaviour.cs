@@ -58,9 +58,6 @@ public class BossBehaviour : MonoBehaviour
         }
     }
 
-   
-
-   
     public void CheckHitL()
     {
         Collider[] hitColliders = Physics.OverlapSphere(hitPointL.position, attackRadius);
@@ -86,7 +83,7 @@ public class BossBehaviour : MonoBehaviour
             if (hitCollider.gameObject.layer == 3)
             {
                 Debug.Log("¡Golpe al jugador!");
-               
+                
 
                 
                 break;
@@ -141,7 +138,6 @@ public class BossBehaviour : MonoBehaviour
             }
             else
             {
-                
                 ChangeState(BossStates.Chase);
             }
         }

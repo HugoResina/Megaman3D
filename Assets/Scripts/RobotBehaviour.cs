@@ -65,7 +65,7 @@ public class RobotBehaviour : MonoBehaviour
             Physics.Raycast(LookPoint.position, direction, out hit, 10000f);
 
 
-            Debug.Log(hit.transform.gameObject.layer);
+            //Debug.Log(hit.transform.gameObject.layer);
             Debug.DrawRay(LookPoint.position, direction);
             if (hit.transform.gameObject.layer != 3 && hit.transform.gameObject.layer != 7)
             {

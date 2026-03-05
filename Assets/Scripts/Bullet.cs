@@ -9,6 +9,10 @@ public class Bullet : MonoBehaviour
     private float SmallDmg = 10f;
     private float MediumDmg = 25f;
     private float LargeDmg = 50f;
+    //public GameObject ExplosionSmall;
+    //public GameObject ExplosionMedium;
+    //public GameObject ExplosionLarge;
+    public GameObject Explsion;
 
     public BulletType Type { get; private set; }
 
@@ -53,6 +57,23 @@ public class Bullet : MonoBehaviour
         }
         if (!collision.gameObject.CompareTag("Player"))
         {
+            //switch (Type)
+            //{
+            //    case BulletType.Small:
+            //        Instantiate(ExplosionSmall, transform.position, Quaternion.identity);
+            //        Debug.Log("exp pequeña");
+            //        break;
+            //    case BulletType.Medium:
+            //        Instantiate(ExplosionMedium, transform.position, Quaternion.identity);
+            //        Debug.Log("exp mediana");
+            //        break;
+            //    case BulletType.Large:
+            //        Instantiate(ExplosionLarge, transform.position, Quaternion.identity);
+            //        Debug.Log("exp grande");
+            //        break;
+            //}
+            Instantiate(Explsion, transform.position, Quaternion.identity);
+            Debug.Log("exp ");
             ReturnToPool();
         }
     }

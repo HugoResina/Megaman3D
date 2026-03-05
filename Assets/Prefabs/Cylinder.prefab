@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2540844099219334128}
   - component: {fileID: -625254579974721722}
   - component: {fileID: -1365472516746596312}
+  - component: {fileID: 5669402868666601207}
   m_Layer: 7
   m_Name: Cylinder
   m_TagString: Untagged
@@ -155,3 +156,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c38c77c3e2a19544dbc6b6da0ab9e016, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
+  Explsion: {fileID: 5573436020302827943, guid: d3fe4e7c85a114443a15bf827f1f8bc0, type: 3}
+--- !u!114 &5669402868666601207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3297064628845400584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 155ab3d836d613b4bbb039fce47d6cd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KillVFX
+  TTK: 1

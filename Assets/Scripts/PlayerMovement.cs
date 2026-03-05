@@ -78,6 +78,9 @@ public class PlayerMovement : MonoBehaviour
 
         Movement();
 
+        isItem = Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward, out hit, 3f, ItemLayer);
+        isDoor = Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward, out hit, 3f, DoorLayer);
+
     }
 
 

@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
     private float SmallDmg = 10f;
     private float MediumDmg = 25f;
     private float LargeDmg = 50f;
+    public string AuidoClipName;
    
     public GameObject Explsion;
 
@@ -27,6 +28,7 @@ public class Bullet : MonoBehaviour
 
     public void Shoot(Vector3 direction, float speed, float lifeTime)
     {
+        AudioManager.instance.PlaySFX(AuidoClipName);
         gameObject.SetActive(true);
         rb.linearVelocity = direction * speed;
 
@@ -56,6 +58,7 @@ public class Bullet : MonoBehaviour
         {
            
             Instantiate(Explsion, transform.position, Quaternion.identity);
+            AudioManager.instance.PlaySFX("HitExplosion");
             Debug.Log("exp ");
             ReturnToPool();
         }

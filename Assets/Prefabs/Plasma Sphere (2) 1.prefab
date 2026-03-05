@@ -266,5 +266,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c38c77c3e2a19544dbc6b6da0ab9e016, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
-  AuidoClipName: ChargedShot
+  AuidoClipName: SuperChargedShot
   Explsion: {fileID: 755771227093040221, guid: eabfcd127ebc5ee4ba7f13c88129dd2e, type: 3}

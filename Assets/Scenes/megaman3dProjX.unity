@@ -6441,13 +6441,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1251763543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.76440746, y: -0.0063442737, z: 0.6376391, w: 0.09517026}
-  m_LocalPosition: {x: -0.47204304, y: -0.047982812, z: 0.018141046}
+  m_LocalRotation: {x: 0.8102741, y: 0.00084378064, z: 0.57823724, w: 0.09537773}
+  m_LocalPosition: {x: -0.5289579, y: -0.047982812, z: 0.14652285}
   m_LocalScale: {x: 99.999954, y: 99.99992, z: 99.99998}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 834799144}
-  m_LocalEulerAnglesHint: {x: -351.165, y: 459.831, z: 893.511}
+  m_LocalEulerAnglesHint: {x: -351.165, y: 468.472, z: 893.511}
 --- !u!1001 &1262998003
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12057,14 +12057,14 @@ MonoBehaviour:
     loop: 0
     playOnAwake: 0
     source: {fileID: 0}
-  - name: ChargeShot
+  - name: ChargedShot
     clip: {fileID: 8300000, guid: c114a8d4093a9704483f88bb42dcb90d, type: 3}
     volume: 1
     pitch: 1
     loop: 0
     playOnAwake: 0
     source: {fileID: 0}
-  - name: SuperChargeShot
+  - name: SuperChargedShot
     clip: {fileID: 8300000, guid: 1cb825a94d11919428389985e603176f, type: 3}
     volume: 1
     pitch: 1

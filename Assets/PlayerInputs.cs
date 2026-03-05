@@ -71,18 +71,17 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
     {
         if (context.started)
         {
-            //Debug.Log("hola");
+            
+
             AudioManager.instance.PlaySFX("Charging");
         }
         if (context.performed)
         {
             //Debug.Log("Attack Performed");
             // Debug.Log(context.duration);
-            Debug.Log("click");
         }
         if (context.canceled)
         {
-            Debug.Log("release");
             //    Debug.Log(context.duration);
             //    Debug.Log(context.time);
             //    Debug.Log(context.startTime);

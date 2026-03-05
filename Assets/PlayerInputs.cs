@@ -69,19 +69,28 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     public void OnAttack(InputAction.CallbackContext context)
     {
+        if (context.started)
+        {
+            //Debug.Log("hola");
+            AudioManager.instance.PlaySFX("Charging");
+        }
         if (context.performed)
         {
             //Debug.Log("Attack Performed");
             // Debug.Log(context.duration);
+            Debug.Log("click");
         }
         if (context.canceled)
         {
+            Debug.Log("release");
             //    Debug.Log(context.duration);
             //    Debug.Log(context.time);
             //    Debug.Log(context.startTime);
 
             //playerShoot.ChooseProj(context.time - context.startTime);
             Shooter.ChooseProj(context.time - context.startTime);
+            AudioManager.instance.StopSFX("Charging");
+
         }
     }
 

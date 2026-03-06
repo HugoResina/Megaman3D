@@ -33,6 +33,9 @@ public class BossBehaviour : MonoBehaviour
     [SerializeField] private Transform hitPointL; 
     [SerializeField] private Transform hitPointR; 
 
+    [SerializeField] private GameObject Bullet;
+    [SerializeField] private Transform ShootPoint; 
+
     private bool canAttack = true;
     [SerializeField] private float attackCooldown = 1.5f;
   
@@ -179,7 +182,8 @@ public class BossBehaviour : MonoBehaviour
     }
     public void Shoot()
     {
-        Debug.Log("pam");
+        //Debug.Log("pam");
+        BossBullet.Create(Bullet, ShootPoint.position, ShootPoint.rotation, 10f, 3f);
     }
     private void StartAction(float lookDelay, float totalDuration)
     {

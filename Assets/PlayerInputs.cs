@@ -102,13 +102,14 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
     {
         if (context.started)
         {
+            
             AudioManager.instance.PlaySFX("Charging");
             chargeCoroutine = StartCoroutine(AutoFireRoutine());
         }
 
         if (context.canceled)
         {
-            // Si el jugador suelta el botón antes de los 3.27s
+
             if (chargeCoroutine != null)
             {
                 StopCoroutine(chargeCoroutine);

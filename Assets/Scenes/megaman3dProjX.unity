@@ -8853,7 +8853,7 @@ MonoBehaviour:
   - {fileID: 928066193}
   - {fileID: 1648668783}
   projectileLife: 4
-  projectileSpeed: 1.5
+  projectileSpeed: 2
 --- !u!114 &1795165763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8869,7 +8869,7 @@ MonoBehaviour:
   PlayerLayer:
     serializedVersion: 2
     m_Bits: 8
-  lookDistance: 4
+  lookDistance: 3.7
   route:
   - {fileID: 340317313}
   - {fileID: 1663863355}

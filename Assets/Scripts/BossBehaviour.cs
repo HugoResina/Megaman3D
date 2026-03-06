@@ -61,6 +61,14 @@ public class BossBehaviour : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.layer == 7)
+        {
+            Debug.Log("hit");
+            //daño boss
+        }
+    }
     public void CheckHitL()
     {
         Collider[] hitColliders = Physics.OverlapSphere(hitPointL.position, attackRadius);

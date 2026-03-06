@@ -8,7 +8,7 @@ public class RobotBullet : MonoBehaviour
     private RobotPool pool;
     private Coroutine returnCoroutine;
     private float ExplosionRadius = 1.3f;
-    private float RocketDamage = 25f;
+    private float RocketDamage = 40f;
     private bool isHit = false;
     public LayerMask playerLayer;
     public GameObject Explosion;
@@ -71,6 +71,8 @@ public class RobotBullet : MonoBehaviour
 
             if (!objectsHit.Contains(rootEntity))
             {
+                Health h = hitCollider.gameObject.GetComponent<Health>();
+                h.TakeDamage(RocketDamage);
                 Debug.Log("Impactado: " + rootEntity.name);
 
 

@@ -10,7 +10,7 @@ public class Bullet : MonoBehaviour
     private float MediumDmg = 25f;
     private float LargeDmg = 50f;
     public string AuidoClipName;
-   
+    public float damage;
     public GameObject Explsion;
 
     public BulletType Type { get; private set; }
@@ -33,6 +33,13 @@ public class Bullet : MonoBehaviour
         rb.linearVelocity = direction * speed;
 
         returnCoroutine = StartCoroutine(ReturnAfterTime(lifeTime));
+        damage = Type switch
+        {
+            BulletType.Small => SmallDmg,
+            BulletType.Medium => MediumDmg,
+            BulletType.Large => LargeDmg,
+            _ => 0f
+        };
     }
 
     private IEnumerator ReturnAfterTime(float time)
@@ -45,13 +52,7 @@ public class Bullet : MonoBehaviour
         Health health = collision.gameObject.GetComponent<Health>();
         if (health != null)
         {
-            float damage = Type switch
-            {
-                BulletType.Small => SmallDmg,
-                BulletType.Medium => MediumDmg,
-                BulletType.Large => LargeDmg,
-                _ => 0f
-            };
+            
             health.TakeDamage(damage);
         }
         if (!collision.gameObject.CompareTag("Player"))
@@ -59,7 +60,7 @@ public class Bullet : MonoBehaviour
            
             Instantiate(Explsion, transform.position, Quaternion.identity);
             AudioManager.instance.PlaySFX("HitExplosion");
-            //Debug.Log("exp");
+
             ReturnToPool();
         }
     }

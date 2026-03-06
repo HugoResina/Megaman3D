@@ -63,7 +63,9 @@ public class Health : MonoBehaviour
         if (isDead || !canTakeDamage)
             return;
 
+        Debug.Log("daño recibido: " + damageAmount);
         currentHealth -= damageAmount;
+        Debug.Log(currentHealth);
         lastDamageTime = Time.time;
         canTakeDamage = false;
         isRegenerating = false;

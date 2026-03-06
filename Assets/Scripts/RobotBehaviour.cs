@@ -29,6 +29,10 @@ public class RobotBehaviour : MonoBehaviour
     private Transform LookPoint;
 
     private int PatrolIndex = 0;
+    //[SerializeField]
+    private float health = 75;
+    [SerializeField]
+    private GameObject explosion;
     void Start()
     {
         CurrentState = RobotStates.patrol;
@@ -38,22 +42,41 @@ public class RobotBehaviour : MonoBehaviour
 
     void Update()
     {
+        
+            switch (CurrentState)
+            {
 
-        switch (CurrentState)
+                case RobotStates.Attack:
+
+                    break;
+
+                case RobotStates.patrol:
+                    Patrol();
+                    break;
+
+                default:
+                    break;
+            }
+        
+       
+
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == 7)
         {
+            Bullet bullet = collision.gameObject.GetComponent<Bullet>();
+            Debug.Log(bullet.damage);
+            health = health - bullet.damage;
+            //Debug.Log(health);
+            if (health <= 0)
+            {
+                //sonido
+                Instantiate(explosion, transform.position, Quaternion.identity);
 
-            case RobotStates.Attack:
-
-                break;
-
-            case RobotStates.patrol:
-                Patrol();
-                break;
-
-            default:
-                break;
+                Destroy(gameObject);
+            }
         }
-
     }
     private void OnTriggerStay(Collider other)
     {

@@ -27,9 +27,12 @@ public class BossBehaviour : MonoBehaviour
     private bool isPerformingAction = false;
     private bool lookAtPlayer = true;
 
+    
+
     [Header("Combat Settings")]
     [SerializeField] private float attackRadius = 1f;
-    [SerializeField] private float attackDamage = 10f;
+    private float attackDamage = 75f;
+    private float BulletDamage = 20f;
     [SerializeField] private Transform hitPointL; 
     [SerializeField] private Transform hitPointR; 
 
@@ -38,9 +41,10 @@ public class BossBehaviour : MonoBehaviour
 
     private bool canAttack = true;
     [SerializeField] private float attackCooldown = 1.5f;
+    [SerializeField] private GameObject explosion;
   
 
-    public float Health = 100;
+    private float health = 500;
 
     void Start()
     {
@@ -63,10 +67,19 @@ public class BossBehaviour : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.layer == 7)
+        if (collision.gameObject.layer == 7)
         {
-            Debug.Log("hit");
-            //daño boss
+            Bullet bullet = collision.gameObject.GetComponent<Bullet>();
+            Debug.Log(bullet.damage);
+            health = health - bullet.damage;
+            //Debug.Log(health);
+            if (health <= 0)
+            {
+                //sonido
+                Instantiate(explosion, transform.position, Quaternion.identity);
+
+                Destroy(gameObject);
+            }
         }
     }
     public void CheckHitL()
@@ -77,8 +90,9 @@ public class BossBehaviour : MonoBehaviour
         {
             if (hitCollider.gameObject.layer == 3)
             {
-                Debug.Log("¡Golpe al jugador!");
-               
+                //Debug.Log("¡Golpe al jugador!");
+                Health h = hitCollider.gameObject.GetComponent<Health>();
+                h.TakeDamage(attackDamage);
 
                 
                 break;
@@ -93,10 +107,11 @@ public class BossBehaviour : MonoBehaviour
         {
             if (hitCollider.gameObject.layer == 3)
             {
-                Debug.Log("¡Golpe al jugador!");
-                
+                //Debug.Log("¡Golpe al jugador!");
+                Health h = hitCollider.gameObject.GetComponent<Health>();
+                h.TakeDamage(attackDamage);
 
-                
+
                 break;
             }
         }
@@ -143,7 +158,7 @@ public class BossBehaviour : MonoBehaviour
             {
                 ChangeState(BossStates.Shoot);
             }
-            else if (Health < 50 && Health > 0 && distance > shootDistance && canAttack)
+            else if (health < 50 && health > 0 && distance > shootDistance && canAttack)
             {
                 ChangeState(BossStates.Charge);
             }

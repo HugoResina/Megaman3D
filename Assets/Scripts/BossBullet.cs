@@ -43,7 +43,7 @@ public class BossBullet : MonoBehaviour
         if (isHit) return;
         isHit = true;
 
-        //check layer i daño player
+        
         Destroy(gameObject);
     }
 }

@@ -8,7 +8,7 @@ public class DamageToPlayer : MonoBehaviour
     {
         Health health = collision.gameObject.GetComponent<Health>();
         if (health != null)
-        {
+        { 
             health.TakeDamage(damageAmount);
         }
     }

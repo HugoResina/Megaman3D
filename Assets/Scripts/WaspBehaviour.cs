@@ -23,6 +23,10 @@ public class WaspBehaviour : MonoBehaviour
     [SerializeField]
     private float lookDistance = 8f;
     private float fracJourney = 0.008f;
+    //[SerializeField]
+    private float health = 50;
+    [SerializeField]
+    private GameObject explosion;
 
     private float distCovered;
     public WaspStates CurrentState;
@@ -34,7 +38,7 @@ public class WaspBehaviour : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log("avisjpa : " + CurrentState);
+        //Debug.Log("avisjpa : " + CurrentState);
         
 
         switch (CurrentState)
@@ -120,7 +124,24 @@ public class WaspBehaviour : MonoBehaviour
             CurrentState = WaspStates.Reposition;
             
         }
+        if (collision.gameObject.layer == 7)
+        {
+            Bullet bullet = collision.gameObject.GetComponent<Bullet>();
+            Debug.Log(bullet.damage);
+            health = health - bullet.damage;
+            //Debug.Log(health);
+            if (health <= 0)
+            {
+                
+                //sonido
+                Instantiate(explosion, transform.position, Quaternion.identity);
+
+                Destroy(gameObject);
+            }
+        }
     }
+
+    
    
     private IEnumerator RecoverTimeFromAttack()
     {

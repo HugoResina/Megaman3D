@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.VisualScripting;
+using System.Collections;
 
 public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
 {
@@ -20,6 +21,7 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
     private float jumpForce = 10f;
     public bool isJumpHeld = false;
     public static event Action HasInteracted;
+    
 
     private Shooter Shooter;
     //private bool isJumping = false;
@@ -67,37 +69,73 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
 
 
+    //public void OnAttack(InputAction.CallbackContext context)
+    //{
+    //    if (context.started)
+    //    {
+
+
+    //        AudioManager.instance.PlaySFX("Charging");
+
+    //    }
+    //    if (context.performed)
+    //    {
+    //        //Debug.Log("Attack Performed");
+    //        // Debug.Log(context.duration);
+    //    }
+    //    if (context.canceled)
+    //    {
+    //        //    Debug.Log(context.duration);
+    //        //    Debug.Log(context.time);
+    //        //    Debug.Log(context.startTime);
+
+    //        //playerShoot.ChooseProj(context.time - context.startTime);
+    //        Shooter.ChooseProj(context.time - context.startTime);
+    //        AudioManager.instance.StopSFX("Charging");
+
+    //    }
+    //}
+    private Coroutine chargeCoroutine;
+    private const float MAX_CHARGE_TIME = 3.27f;
+
     public void OnAttack(InputAction.CallbackContext context)
     {
         if (context.started)
         {
-            
-
             AudioManager.instance.PlaySFX("Charging");
+            chargeCoroutine = StartCoroutine(AutoFireRoutine());
         }
-        if (context.performed)
-        {
-            //Debug.Log("Attack Performed");
-            // Debug.Log(context.duration);
-        }
+
         if (context.canceled)
         {
-            //    Debug.Log(context.duration);
-            //    Debug.Log(context.time);
-            //    Debug.Log(context.startTime);
+            // Si el jugador suelta el botón antes de los 3.27s
+            if (chargeCoroutine != null)
+            {
+                StopCoroutine(chargeCoroutine);
+                chargeCoroutine = null;
 
-            //playerShoot.ChooseProj(context.time - context.startTime);
-            Shooter.ChooseProj(context.time - context.startTime);
-            AudioManager.instance.StopSFX("Charging");
-
+                ExecuteShoot(context.time - context.startTime);
+            }
         }
+    }
+
+    private IEnumerator AutoFireRoutine()
+    {
+        yield return new WaitForSeconds(MAX_CHARGE_TIME);
+
+        chargeCoroutine = null;
+        ExecuteShoot(MAX_CHARGE_TIME);
+    }
+
+    private void ExecuteShoot(double duration)
+    {
+        Shooter.ChooseProj(duration);
+        AudioManager.instance.StopSFX("Charging");
     }
 
 
     public void JumpPerformed(InputAction.CallbackContext context)
     {
-        //timeHeld = context.duration;
-        //Debug.Log("performed");        
 
         //JumpInput = 0;
 

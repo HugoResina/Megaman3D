@@ -59,7 +59,7 @@ public class Bullet : MonoBehaviour
            
             Instantiate(Explsion, transform.position, Quaternion.identity);
             AudioManager.instance.PlaySFX("HitExplosion");
-            Debug.Log("exp ");
+            //Debug.Log("exp");
             ReturnToPool();
         }
     }

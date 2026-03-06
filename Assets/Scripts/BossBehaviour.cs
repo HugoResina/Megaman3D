@@ -53,7 +53,7 @@ public class BossBehaviour : MonoBehaviour
             case BossStates.Chase: Chase(); break;
             case BossStates.Charge: Charge(); break;
             case BossStates.Attack: Attack(); break;
-            case BossStates.Shoot: Shoot(); break;
+            case BossStates.Shoot: ShootAnimation(); break;
             case BossStates.Idle: /*idle*/ break;
         }
     }
@@ -156,7 +156,7 @@ public class BossBehaviour : MonoBehaviour
         _animator.SetTrigger("isAttacking");
     }
 
-    private void Shoot()
+    private void ShootAnimation()
     {
         if (isPerformingAction) return;
         StartAction(1f, 4f);
@@ -177,7 +177,10 @@ public class BossBehaviour : MonoBehaviour
             EndAction();
         }
     }
-
+    public void Shoot()
+    {
+        Debug.Log("pam");
+    }
     private void StartAction(float lookDelay, float totalDuration)
     {
         isPerformingAction = true;

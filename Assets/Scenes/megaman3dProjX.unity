@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 7a2be487ff2a46e4889696992fa6ea86, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -4669,6 +4669,8 @@ MonoBehaviour:
   attackDamage: 10
   hitPointL: {fileID: 1974338354}
   hitPointR: {fileID: 783486916}
+  Bullet: {fileID: 7654147125125056565, guid: 882a8f0bb5362554ca8ff307dee48bab, type: 3}
+  ShootPoint: {fileID: 1965914779}
   attackCooldown: 3
   Health: 100
 --- !u!135 &822741980
@@ -4868,6 +4870,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df4fe865b6c5eee4bbc7f0252da50e35, type: 3}
+--- !u!4 &844852561 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -2872902917994360689, guid: 28ed8ba8c5601db4595aab4ca3d103dd, type: 3}
+  m_PrefabInstance: {fileID: 2116359382}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &848691773
 GameObject:
   m_ObjectHideFlags: 0
@@ -9732,6 +9739,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1930636602}
   m_Mesh: {fileID: 1576662867470407925, guid: 25174ab895a077e4c889dfe63118cb20, type: 3}
+--- !u!1 &1965914778
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1965914779}
+  m_Layer: 9
+  m_Name: ShootPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1965914779
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965914778}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.68799984}
+  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 844852561}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1974338353
 GameObject:
   m_ObjectHideFlags: 0
@@ -11820,6 +11858,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 28ed8ba8c5601db4595aab4ca3d103dd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1398030089}
+    - targetCorrespondingSourceObject: {fileID: -2872902917994360689, guid: 28ed8ba8c5601db4595aab4ca3d103dd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1965914779}
     - targetCorrespondingSourceObject: {fileID: 6303818255995492756, guid: 28ed8ba8c5601db4595aab4ca3d103dd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1974338354}
@@ -12080,7 +12121,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: HitExplosion
     clip: {fileID: 8300000, guid: d413e7229d9501b4eb7ef47082394f1e, type: 3}
-    volume: 1
+    volume: 0.33
     pitch: 1
     loop: 0
     playOnAwake: 0

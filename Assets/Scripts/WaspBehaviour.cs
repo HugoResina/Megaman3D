@@ -122,7 +122,11 @@ public class WaspBehaviour : MonoBehaviour
         if (collision.gameObject.layer == 3 || collision.gameObject.layer == 0)
         {
             CurrentState = WaspStates.Reposition;
-            
+            if(collision.gameObject.layer == 3)
+            {
+                Health h = collision.gameObject.GetComponent<Health>();
+                h.TakeDamage(20);
+            }   
         }
         if (collision.gameObject.layer == 7)
         {

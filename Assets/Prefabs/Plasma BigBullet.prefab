@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 6801625490313897086}
   - component: {fileID: -1876148963693772380}
   - component: {fileID: -2701830363431545379}
+  - component: {fileID: -1153859553855865999}
   m_Layer: 7
   m_Name: Plasma BigBullet
   m_TagString: Untagged
@@ -267,4 +268,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
   AuidoClipName: SuperChargedShot
+  damage: 0
   Explsion: {fileID: 755771227093040221, guid: eabfcd127ebc5ee4ba7f13c88129dd2e, type: 3}
+--- !u!114 &-1153859553855865999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6966507843068169504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Outline
+  outlineMode: 0
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineWidth: 10
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []

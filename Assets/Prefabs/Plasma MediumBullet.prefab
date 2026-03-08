@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3037550457175941438}
   - component: {fileID: -7679369497119899509}
   - component: {fileID: 2002151298357425713}
+  - component: {fileID: 1882334540920249906}
   m_Layer: 7
   m_Name: Plasma MediumBullet
   m_TagString: Untagged
@@ -155,7 +156,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
   AuidoClipName: ChargedShot
+  damage: 0
   Explsion: {fileID: 1385443555896540683, guid: ef25b60ec49ee1248bf05be2a5c3ad3a, type: 3}
+--- !u!114 &1882334540920249906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936826808955296653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Outline
+  outlineMode: 0
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineWidth: 10
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &4695768744203163689
 GameObject:
   m_ObjectHideFlags: 0

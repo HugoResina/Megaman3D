@@ -2,95 +2,58 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField]
-    private float maxHealth = 100f;
-    [SerializeField]
+    [SerializeField] private float maxHealth = 100f;
     private float currentHealth;
-    [SerializeField]
-    private float healthRegenRate = 5f; // Health points regenerated per second
-    [SerializeField]
-    private float healthRegenDelay = 3f; // Time in seconds before health starts regenerating after taking damage
-    [SerializeField]
-    private float damageCooldown = 1f; // Time in seconds during which the player cannot take damage after being hit
-    [SerializeField]
-    private float lastDamageTime = -Mathf.Infinity; // Time when the player last took damage
-    [SerializeField]
-    private float lastRegenTime = -Mathf.Infinity; // Time when health regeneration last occurred
-    [SerializeField]
-    private bool isDead = false;
-    [SerializeField]
-    private bool canTakeDamage = true;
-    [SerializeField]
-    private bool isRegenerating = false;
-    [SerializeField]
-    private UIManager uiManager;
+
+    [Header("Optional - only needed on the Player")]
+    [SerializeField] private bool isPlayer = false;
 
     private void Start()
     {
         currentHealth = maxHealth;
-        UpdateHealthBar();
+        UpdateHealthUI();
     }
 
-    private void Update()
+    public void TakeDamage(float amount)
     {
-        if (isDead)
-            return;
+        currentHealth -= amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
 
-        if (!canTakeDamage && Time.time - lastDamageTime >= damageCooldown)
-        {
-            canTakeDamage = true;
-        }
+        UpdateHealthUI();
 
-        if (!isRegenerating && Time.time - lastDamageTime >= healthRegenDelay)
-        {
-            isRegenerating = true;
-            lastRegenTime = Time.time;
-        }
-
-        if (isRegenerating && currentHealth < maxHealth)
-        {
-            currentHealth += healthRegenRate * Time.deltaTime;
-            currentHealth = Mathf.Min(currentHealth, maxHealth);
-            lastRegenTime = Time.time;
-            UpdateHealthBar();
-        }
-        //Debug.Log($"Health updated: {uiManager.HealthBarFill.fillAmount}");
-        //Debug.Log($"Current Health: {currentHealth}");
-    }
-
-    public void TakeDamage(float damageAmount)
-    {
-        if (isDead || !canTakeDamage)
-            return;
-
-        Debug.Log("daño recibido: " + damageAmount);
-        currentHealth -= damageAmount;
-        Debug.Log(currentHealth);
-        lastDamageTime = Time.time;
-        canTakeDamage = false;
-        isRegenerating = false;
-
-        UpdateHealthBar();
-
-        if (currentHealth <= 0)
+        if (currentHealth <= 0f)
         {
             Die();
         }
     }
 
-    private void Die()
+    public void Heal(float amount)
     {
-        isDead = true;
-        Debug.Log("Player has died.");
+        currentHealth += amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+        UpdateHealthUI();
     }
 
-    private void UpdateHealthBar()
+    private void Die()
     {
-        //Debug.Log($"Updating health bar: Current Health = {currentHealth}, Max Health = {maxHealth}");
-        if (uiManager != null)
+        if (isPlayer)
         {
-            uiManager.HealthBarFill.fillAmount = currentHealth / maxHealth;
-            Debug.Log($"Health bar fill amount set to: {uiManager.HealthBarFill.fillAmount}");
+            GayManager.Instance.TriggerGameOver();
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
+
+    private void UpdateHealthUI()
+    {
+        if (!isPlayer) return;
+
+        if (UIManager.Instance != null)
+            UIManager.Instance.UpdateHealthBar(currentHealth, maxHealth);
+    }
+
+    public float GetCurrentHealth() => currentHealth;
+    public float GetMaxHealth() => maxHealth;
 }

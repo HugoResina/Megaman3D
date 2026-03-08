@@ -377,6 +377,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 736cf4211d1ede4419cba7af29b323b2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1956794709094856611}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 736cf4211d1ede4419cba7af29b323b2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5099294756526648339}
   m_SourcePrefab: {fileID: 100100000, guid: 736cf4211d1ede4419cba7af29b323b2, type: 3}
 --- !u!1 &5061604692524574808 stripped
 GameObject:
@@ -488,6 +491,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.8649101, y: 1.7275349, z: 0.82828724}
   m_Center: {x: -0.020606041, y: 0.8744609, z: 0.017171323}
+--- !u!114 &5099294756526648339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5061604692524574808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Outline
+  outlineMode: 0
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineWidth: 10
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!4 &5581576267143115490 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 736cf4211d1ede4419cba7af29b323b2, type: 3}

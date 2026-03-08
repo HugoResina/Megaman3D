@@ -5,68 +5,65 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    [Header("Interaction")]
-    public Text InteractText;
-
-    [Header("Health Bar")]
-    public Image HealthBarFill;
-    public Text HealthText; // optional: shows "75 / 100"
-
-    [Header("Crosshair")]
-    public GameObject Crosshair;
+    [SerializeField] private GameObject crosshair;
+    [SerializeField] private Image healthBarFill;
+    [SerializeField] private Image healthBarBackground;
+    [SerializeField] private GameObject keyIcon;
+    [SerializeField] private GameObject noKeyIcon;
+    [SerializeField] private GameObject hudRoot;
 
     private void Awake()
     {
         if (Instance == null)
-        {
             Instance = this;
-        }
         else
         {
             Destroy(gameObject);
+            return;
         }
     }
 
-
-    /// <summary>
-    /// Called by Health.cs every time the player takes damage or heals.
-    /// fillAmount is a 0–1 value.
-    /// </summary>
-    public void UpdateHealthBar(float current, float max)
+    private void Start()
     {
-        if (HealthBarFill != null)
-            HealthBarFill.fillAmount = current / max;
-
-        if (HealthText != null)
-            HealthText.text = $"{Mathf.CeilToInt(current)} / {Mathf.CeilToInt(max)}";
+        UpdateKeyIndicator(false);
     }
-
 
     public void ShowCrosshair()
     {
-        if (Crosshair != null)
-            Crosshair.SetActive(true);
+        if (crosshair != null) crosshair.SetActive(true);
     }
 
     public void HideCrosshair()
     {
-        if (Crosshair != null)
-            Crosshair.SetActive(false);
+        if (crosshair != null) crosshair.SetActive(false);
     }
 
-
-    public void ShowInteractPrompt(string message = "Press E to interact")
+    public void ShowHUD()
     {
-        if (InteractText != null)
-        {
-            InteractText.text = message;
-            InteractText.gameObject.SetActive(true);
-        }
+        if (hudRoot != null) hudRoot.SetActive(true);
     }
 
-    public void HideInteractPrompt()
+    public void HideHUD()
     {
-        if (InteractText != null)
-            InteractText.gameObject.SetActive(false);
+        if (hudRoot != null) hudRoot.SetActive(false);
+    }
+
+    public void UpdateHealthBar(float current, float max)
+    {
+        if (healthBarFill == null) return;
+        healthBarFill.fillAmount = Mathf.Clamp01(current / max);
+
+        if (healthBarFill.fillAmount > 0.5f)
+            healthBarFill.color = new Color(0.2f, 0.9f, 0.2f);
+        else if (healthBarFill.fillAmount > 0.25f)
+            healthBarFill.color = new Color(0.95f, 0.8f, 0.1f);
+        else
+            healthBarFill.color = new Color(0.95f, 0.2f, 0.2f);
+    }
+
+    public void UpdateKeyIndicator(bool hasKey)
+    {
+        if (keyIcon != null) keyIcon.SetActive(hasKey);
+        if (noKeyIcon != null) noKeyIcon.SetActive(!hasKey);
     }
 }

@@ -5,13 +5,10 @@ public class MenuManager : MonoBehaviour
 {
     public static MenuManager Instance;
 
-    [Header("Menu Panels")]
     [SerializeField] private GameObject startMenuPanel;
     [SerializeField] private GameObject pauseMenuPanel;
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject youWonPanel;
-
-    [Header("References")]
     [SerializeField] private PlayerInputs playerInputs;
 
     private bool isPaused = false;
@@ -22,9 +19,7 @@ public class MenuManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null)
-        {
             Instance = this;
-        }
         else
         {
             Destroy(gameObject);
@@ -46,8 +41,16 @@ public class MenuManager : MonoBehaviour
         Cursor.visible = !active;
         if (playerInputs != null)
             playerInputs.enabled = active;
-        if (active) UIManager.Instance?.ShowCrosshair();
-        else UIManager.Instance?.HideCrosshair();
+        if (active)
+        {
+            UIManager.Instance?.ShowCrosshair();
+            UIManager.Instance?.ShowHUD();
+        }
+        else
+        {
+            UIManager.Instance?.HideCrosshair();
+            UIManager.Instance?.HideHUD();
+        }
     }
 
     private void ShowStartMenu()
@@ -105,7 +108,6 @@ public class MenuManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         Application.Quit();
-
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif

@@ -109,7 +109,7 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
         if (context.canceled)
         {
-
+            
             if (chargeCoroutine != null)
             {
                 StopCoroutine(chargeCoroutine);

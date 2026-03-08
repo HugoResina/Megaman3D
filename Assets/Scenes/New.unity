@@ -4538,7 +4538,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f9e73c74e4e189479298dd776352752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  sounds: []
+  sounds:
+  - name: Shot
+    clip: {fileID: 8300000, guid: 43a89f2b3aa1c314f953a6dcedb340e7, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: ChargedShot
+    clip: {fileID: 8300000, guid: c114a8d4093a9704483f88bb42dcb90d, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: SuperChargedShot
+    clip: {fileID: 8300000, guid: 1cb825a94d11919428389985e603176f, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Charging
+    clip: {fileID: 8300000, guid: ed2371235c50ed340a13aa29a303cc3e, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: HitExplosion
+    clip: {fileID: 8300000, guid: d413e7229d9501b4eb7ef47082394f1e, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
 --- !u!4 &563240116
 Transform:
   m_ObjectHideFlags: 0

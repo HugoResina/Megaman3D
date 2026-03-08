@@ -4849,6 +4849,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 100
   isPlayer: 1
+--- !u!114 &547962330 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7007986722371436979, guid: d2802a9a078d3624495ecc69d76e0f86, type: 3}
+  m_PrefabInstance: {fileID: 2066298618}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547962327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16dd6ec7321c5b54a84175daee416433, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInputs
 --- !u!1 &562297995 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6325356434795804143, guid: d1a10de184832d44aa1c7fca5d784c06, type: 3}
@@ -10184,6 +10195,7 @@ MonoBehaviour:
   pauseMenuPanel: {fileID: 1222691875}
   gameOverPanel: {fileID: 2106782124}
   youWonPanel: {fileID: 2116878685}
+  playerInputs: {fileID: 547962330}
 --- !u!4 &1203361865
 Transform:
   m_ObjectHideFlags: 0

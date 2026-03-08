@@ -1,33 +1,23 @@
 using UnityEngine;
 using System;
-using UnityEngine;
 using UnityEngine.InputSystem;
-using Unity.VisualScripting;
 using System.Collections;
 
 public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
 {
     public InputSystem_Actions InputActions { get; private set; }
-    //public PlayerShoot playerShoot;
     public Vector2 MoveInput { get; private set; }
     public Vector2 LookInput { get; private set; }
-
     public float JumpInput { get; private set; }
-    public int InteractInput { get; private set; }
-
-    private double MaxTimeToJump = 0.5;
-    private Rigidbody rb;
-    double timeHeld = 0;
-    private float jumpForce = 10f;
     public bool isJumpHeld = false;
+
     public static event Action HasInteracted;
-    
 
     private Shooter Shooter;
-    //private bool isJumping = false;
-    //private float jumpTimeCounter = 0;
-    //private float extraJumpForce = 10f;
+    private Rigidbody rb;
 
+    private Coroutine chargeCoroutine;
+    private const float MAX_CHARGE_TIME = 3.27f;
 
     private void OnEnable()
     {
@@ -48,12 +38,6 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
         InputActions.Player.Disable();
         InputActions.Player.RemoveCallbacks(this);
     }
-    private void Start()
-    {
-
-    }
-
-
 
     public void OnLook(InputAction.CallbackContext context)
     {
@@ -62,59 +46,23 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     public void OnMove(InputAction.CallbackContext context)
     {
-
         MoveInput = context.ReadValue<Vector2>();
     }
-
-
-
-
-    //public void OnAttack(InputAction.CallbackContext context)
-    //{
-    //    if (context.started)
-    //    {
-
-
-    //        AudioManager.instance.PlaySFX("Charging");
-
-    //    }
-    //    if (context.performed)
-    //    {
-    //        //Debug.Log("Attack Performed");
-    //        // Debug.Log(context.duration);
-    //    }
-    //    if (context.canceled)
-    //    {
-    //        //    Debug.Log(context.duration);
-    //        //    Debug.Log(context.time);
-    //        //    Debug.Log(context.startTime);
-
-    //        //playerShoot.ChooseProj(context.time - context.startTime);
-    //        Shooter.ChooseProj(context.time - context.startTime);
-    //        AudioManager.instance.StopSFX("Charging");
-
-    //    }
-    //}
-    private Coroutine chargeCoroutine;
-    private const float MAX_CHARGE_TIME = 3.27f;
 
     public void OnAttack(InputAction.CallbackContext context)
     {
         if (context.started)
         {
-            
             AudioManager.instance.PlaySFX("Charging");
             chargeCoroutine = StartCoroutine(AutoFireRoutine());
         }
 
         if (context.canceled)
         {
-            
             if (chargeCoroutine != null)
             {
                 StopCoroutine(chargeCoroutine);
                 chargeCoroutine = null;
-
                 ExecuteShoot(context.time - context.startTime);
             }
         }
@@ -123,7 +71,6 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
     private IEnumerator AutoFireRoutine()
     {
         yield return new WaitForSeconds(MAX_CHARGE_TIME);
-
         chargeCoroutine = null;
         ExecuteShoot(MAX_CHARGE_TIME);
     }
@@ -134,22 +81,10 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
         AudioManager.instance.StopSFX("Charging");
     }
 
+    public void JumpPerformed(InputAction.CallbackContext context) { }
 
-    public void JumpPerformed(InputAction.CallbackContext context)
-    {
+    public void JumpCanceled(InputAction.CallbackContext context) { }
 
-        //JumpInput = 0;
-
-
-    }
-    public void JumpCanceled(InputAction.CallbackContext context)
-    {
-        //Debug.Log("canceledS");
-        //JumpInput = 0;
-
-
-
-    }
     public void OnJump(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -175,7 +110,12 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     public void OnPause(InputAction.CallbackContext context)
     {
-        //throw new NotImplementedException();
-        Debug.Log("pausaria");
+        if (context.performed)
+        {
+            if (MenuManager.Instance.IsPaused)
+                MenuManager.Instance.ResumeGame();
+            else
+                MenuManager.Instance.PauseGame();
+        }
     }
 }

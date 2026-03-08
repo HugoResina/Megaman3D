@@ -11,8 +11,13 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject youWonPanel;
 
+    [Header("References")]
+    [SerializeField] private PlayerInputs playerInputs;
+
     private bool isPaused = false;
     private bool gameStarted = false;
+
+    public bool IsPaused => isPaused;
 
     private void Awake()
     {
@@ -32,19 +37,18 @@ public class MenuManager : MonoBehaviour
         ShowStartMenu();
     }
 
-    private void Update()
+    private void Update() { }
+
+    private void SetGameActive(bool active)
     {
-        if (!gameStarted) return;
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (isPaused)
-                ResumeGame();
-            else
-                PauseGame();
-        }
+        Time.timeScale = active ? 1f : 0f;
+        Cursor.lockState = active ? CursorLockMode.Locked : CursorLockMode.None;
+        Cursor.visible = !active;
+        if (playerInputs != null)
+            playerInputs.enabled = active;
+        if (active) UIManager.Instance?.ShowCrosshair();
+        else UIManager.Instance?.HideCrosshair();
     }
-
 
     private void ShowStartMenu()
     {
@@ -52,10 +56,7 @@ public class MenuManager : MonoBehaviour
         pauseMenuPanel.SetActive(false);
         gameOverPanel.SetActive(false);
         youWonPanel.SetActive(false);
-
-        Time.timeScale = 0f;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        SetGameActive(false);
     }
 
     public void StartGame()
@@ -63,60 +64,36 @@ public class MenuManager : MonoBehaviour
         startMenuPanel.SetActive(false);
         gameStarted = true;
         isPaused = false;
-
-        Time.timeScale = 1f;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        UIManager.Instance?.ShowCrosshair();
+        SetGameActive(true);
     }
-
 
     public void PauseGame()
     {
         isPaused = true;
         pauseMenuPanel.SetActive(true);
-
-        Time.timeScale = 0f;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        UIManager.Instance?.HideCrosshair();
+        SetGameActive(false);
     }
 
     public void ResumeGame()
     {
         isPaused = false;
         pauseMenuPanel.SetActive(false);
-
-        Time.timeScale = 1f;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        UIManager.Instance?.ShowCrosshair();
+        SetGameActive(true);
     }
-
 
     public void ShowGameOver()
     {
         gameOverPanel.SetActive(true);
         pauseMenuPanel.SetActive(false);
-
-        Time.timeScale = 0f;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        UIManager.Instance?.HideCrosshair();
+        SetGameActive(false);
     }
-
 
     public void ShowYouWon()
     {
         youWonPanel.SetActive(true);
         pauseMenuPanel.SetActive(false);
-
-        Time.timeScale = 0f;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        UIManager.Instance?.HideCrosshair();
+        SetGameActive(false);
     }
-
 
     public void RestartGame()
     {

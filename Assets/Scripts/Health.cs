@@ -7,6 +7,7 @@ public class Health : MonoBehaviour
 
     [Header("Optional - only needed on the Player")]
     [SerializeField] private bool isPlayer = false;
+    [SerializeField] private bool isBoss = false;
 
     private void Start()
     {
@@ -37,13 +38,11 @@ public class Health : MonoBehaviour
     private void Die()
     {
         if (isPlayer)
-        {
             GayManager.Instance.TriggerGameOver();
-        }
+        else if (isBoss)
+            GayManager.Instance.TriggerYouWon();
         else
-        {
             Destroy(gameObject);
-        }
     }
 
     private void UpdateHealthUI()

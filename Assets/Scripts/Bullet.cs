@@ -47,20 +47,17 @@ public class Bullet : MonoBehaviour
         yield return new WaitForSeconds(time);
         ReturnToPool();
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         Health health = collision.gameObject.GetComponent<Health>();
         if (health != null)
-        {
-            
             health.TakeDamage(damage);
-        }
+
         if (!collision.gameObject.CompareTag("Player"))
         {
-           
             Instantiate(Explsion, transform.position, Quaternion.identity);
             AudioManager.instance.PlaySFX("HitExplosion");
-
             ReturnToPool();
         }
     }
@@ -72,7 +69,6 @@ public class Bullet : MonoBehaviour
             StopCoroutine(returnCoroutine);
             returnCoroutine = null;
         }
-
         pool.ReturnBullet(this);
     }
 

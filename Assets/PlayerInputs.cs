@@ -1,3 +1,4 @@
+// PlayerInputs.cs
 using UnityEngine;
 using System;
 using UnityEngine.InputSystem;
@@ -82,7 +83,6 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
     }
 
     public void JumpPerformed(InputAction.CallbackContext context) { }
-
     public void JumpCanceled(InputAction.CallbackContext context) { }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -92,7 +92,6 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
             JumpInput = 1f;
             isJumpHeld = true;
         }
-
         if (context.canceled)
         {
             JumpInput = 0f;
@@ -103,9 +102,7 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
     public void OnInteract(InputAction.CallbackContext context)
     {
         if (context.performed)
-        {
             HasInteracted?.Invoke();
-        }
     }
 
     public void OnPause(InputAction.CallbackContext context)

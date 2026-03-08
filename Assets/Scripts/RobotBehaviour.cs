@@ -1,38 +1,29 @@
+// RobotBehaviour.cs
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public enum RobotStates
-{
-    Attack,
-    patrol
-}
+public enum RobotStates { Attack, patrol }
+
 public class RobotBehaviour : MonoBehaviour
 {
-
     private bool CanAttack = false;
-
     private Vector3 playerLastPosition;
 
-    [SerializeField]
-    private LayerMask PlayerLayer;
-    [SerializeField]
-    private float lookDistance = 8f;
+    [SerializeField] private LayerMask PlayerLayer;
+    [SerializeField] private float lookDistance = 8f;
     RobotStates CurrentState;
     RobotShooter shooter;
-    [SerializeField]
-    Transform[] route;
+    [SerializeField] Transform[] route;
     public bool isAttacking = false;
     private Animator _animator;
-    [SerializeField]
-    private Transform LookPoint;
+    [SerializeField] private Transform LookPoint;
 
     private int PatrolIndex = 0;
-    //[SerializeField]
     private float health = 75;
-    [SerializeField]
-    private GameObject explosion;
+    [SerializeField] private GameObject explosion;
+
     void Start()
     {
         CurrentState = RobotStates.patrol;
@@ -42,84 +33,61 @@ public class RobotBehaviour : MonoBehaviour
 
     void Update()
     {
-        
-            switch (CurrentState)
-            {
-
-                case RobotStates.Attack:
-
-                    break;
-
-                case RobotStates.patrol:
-                    Patrol();
-                    break;
-
-                default:
-                    break;
-            }
-        
-       
-
+        switch (CurrentState)
+        {
+            case RobotStates.Attack:
+                break;
+            case RobotStates.patrol:
+                Patrol();
+                break;
+        }
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == 7)
         {
             Bullet bullet = collision.gameObject.GetComponent<Bullet>();
-            Debug.Log(bullet.damage);
-            health = health - bullet.damage;
-            //Debug.Log(health);
+            health -= bullet.damage;
             if (health <= 0)
             {
-                //sonido
                 Instantiate(explosion, transform.position, Quaternion.identity);
-
                 Destroy(gameObject);
             }
         }
     }
+
     private void OnTriggerStay(Collider other)
     {
+        RaycastHit hit;
+        Vector3 direction = (other.transform.position - LookPoint.position);
+        Physics.Raycast(LookPoint.position, direction, out hit, 10000f);
+        Debug.DrawRay(LookPoint.position, direction);
 
-
+        if (hit.transform.gameObject.layer != 3 && hit.transform.gameObject.layer != 7)
         {
-            RaycastHit hit;
-            Vector3 direction = (other.transform.position - LookPoint.position);
-            Physics.Raycast(LookPoint.position, direction, out hit, 10000f);
+            CanAttack = false;
+            _animator.SetBool("isAttacking", false);
+            isAttacking = false;
+            CurrentState = RobotStates.patrol;
+        }
+        else if (hit.transform.gameObject.layer == 3)
+        {
+            isAttacking = true;
+            _animator.SetBool("isAttacking", true);
+            playerLastPosition = other.transform.position;
+            playerLastPosition.y = 0f;
+            transform.LookAt(playerLastPosition);
 
-
-            //Debug.Log(hit.transform.gameObject.layer);
-            Debug.DrawRay(LookPoint.position, direction);
-            if (hit.transform.gameObject.layer != 3 && hit.transform.gameObject.layer != 7)
+            if (CanAttack)
             {
+                CurrentState = RobotStates.Attack;
+                Attack(other.transform);
                 CanAttack = false;
-                _animator.SetBool("isAttacking", false);
-                isAttacking = false;
-                CurrentState = RobotStates.patrol;
-                //Patrol();
-            }
-            else if (hit.transform.gameObject.layer == 3)
-            {
-                isAttacking = true;
-                _animator.SetBool("isAttacking", true);
-                playerLastPosition = other.transform.position;
-                playerLastPosition.y = 0f;
-                transform.LookAt(playerLastPosition);
-
-                if (CanAttack)
-                {
-
-                    CurrentState = RobotStates.Attack;
-
-                    Attack(other.transform);
-                    CanAttack = false;
-
-                }
-
             }
         }
-
     }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.layer == 3)
@@ -132,35 +100,24 @@ public class RobotBehaviour : MonoBehaviour
         }
     }
 
-
     public void Attack(Transform objectiu)
     {
-
         if (CanAttack)
-        {
             shooter.Shoot(objectiu);
-        }
     }
+
     public void Patrol()
     {
-
         if (!isAttacking)
         {
-
-
             Vector3 CurrentPoint = route[PatrolIndex % route.Length].position;
             CurrentPoint.y = 0f;
-
             Vector3 posToGoTo = new Vector3(CurrentPoint.x, transform.position.y, CurrentPoint.z);
             transform.position = Vector3.MoveTowards(transform.position, posToGoTo, 0.9f * Time.deltaTime);
             transform.LookAt(posToGoTo);
             if (Vector3.Distance(transform.position, posToGoTo) < 0.05f)
-            {
                 PatrolIndex++;
-            }
-
         }
-
     }
 
     public void SyncShootAnimation()

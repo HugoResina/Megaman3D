@@ -17,6 +17,7 @@ public class BossBehaviour : MonoBehaviour
 {
     private BossStates CurrentState = BossStates.Idle;
     private Transform LastPlayerPosition;
+    [SerializeField] private GayManager gayManager;
     [SerializeField] private Transform LookPoint;
 
     private float shootDistance = 12f;
@@ -70,15 +71,17 @@ public class BossBehaviour : MonoBehaviour
         if (collision.gameObject.layer == 7)
         {
             Bullet bullet = collision.gameObject.GetComponent<Bullet>();
-            Debug.Log(bullet.damage);
+            //Debug.Log(bullet.damage);
             health = health - bullet.damage;
             //Debug.Log(health);
             if (health <= 0)
             {
                 //sonido
                 Instantiate(explosion, transform.position, Quaternion.identity);
-
+               
                 Destroy(gameObject);
+
+                gayManager.TriggerYouWon();
             }
         }
     }

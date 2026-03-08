@@ -15,12 +15,9 @@ public class BossBullet : MonoBehaviour
     public static void Create(GameObject prefab, Vector3 position, Quaternion rotation, float speed, float lifeTime)
     {
         GameObject obj = Instantiate(prefab, position, rotation);
-
         BossBullet bullet = obj.GetComponent<BossBullet>();
         if (bullet != null)
-        {
             bullet.ExecuteShoot(rotation * Vector3.forward, speed, lifeTime);
-        }
     }
 
     private void ExecuteShoot(Vector3 direction, float speed, float lifeTime)
@@ -28,7 +25,6 @@ public class BossBullet : MonoBehaviour
         isHit = false;
         rb.isKinematic = false;
         rb.linearVelocity = direction * speed;
-
         StartCoroutine(ReturnAfterTime(lifeTime));
     }
 
@@ -42,8 +38,6 @@ public class BossBullet : MonoBehaviour
     {
         if (isHit) return;
         isHit = true;
-
-        
         Destroy(gameObject);
     }
 }

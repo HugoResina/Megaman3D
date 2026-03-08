@@ -1,3 +1,4 @@
+// AudioManager.cs
 using System;
 using UnityEngine;
 
@@ -9,10 +10,8 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
-        {
+        if (instance == null)
             instance = this;
-        }
         else
         {
             Destroy(gameObject);
@@ -20,8 +19,8 @@ public class AudioManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
-        
-        foreach(Sound s in sounds)
+
+        foreach (Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
@@ -35,24 +34,14 @@ public class AudioManager : MonoBehaviour
     public void PlaySFX(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
-
-        if(s == null)
-        {
-            Debug.Log("no s'ha pogut reproduir " + name);
-            return;
-        }
+        if (s == null) return;
         s.source.Play();
     }
 
     public void StopSFX(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
-
-        if (s == null)
-        {
-            Debug.Log("no s'ha pogut aturar " + name);
-            return;
-        }
+        if (s == null) return;
         s.source.Stop();
     }
 }

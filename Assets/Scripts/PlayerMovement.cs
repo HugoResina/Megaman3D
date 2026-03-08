@@ -45,10 +45,7 @@ public class PlayerMovement : MonoBehaviour
         _characterController = GetComponent<CharacterController>();
     }
 
-    private void Start()
-    {
-        // Cursor and timescale are controlled entirely by MenuManager
-    }
+    private void Start() { }
 
     private void OnEnable()
     {

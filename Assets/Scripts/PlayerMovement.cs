@@ -64,8 +64,11 @@ public class PlayerMovement : MonoBehaviour
         CutJump();
         Movement();
 
-        isItem = Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward, out hit, 3f, ItemLayer);
-        isDoor = Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward, out hit, 3f, DoorLayer);
+        isItem = Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward, out hit, 5f, ItemLayer);
+        isDoor = Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward, out hit, 5f, DoorLayer);
+
+        Debug.Log("item: " + isItem);
+        //Debug.Log("door: " + isDoor);
     }
 
     private void IsGroundedAndWalls()
@@ -108,6 +111,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Interact()
     {
+        //Debug.Log("hola");
         if (isItem)
         {
             bool hititem = Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward, out a, 3f, ItemLayer);
@@ -117,7 +121,10 @@ public class PlayerMovement : MonoBehaviour
         else if (isDoor)
         {
             if (GayManager.Instance.HasKey)
-                Debug.Log("Abro");
+            {
+                Debug.Log("abro puerta anim");
+                GayManager.Instance.OpenDoor();
+            }
             else
                 Debug.Log("Falta llave");
         }

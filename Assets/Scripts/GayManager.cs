@@ -3,8 +3,15 @@ using UnityEngine;
 public class GayManager : MonoBehaviour
 {
     public static GayManager Instance;
-
-    private bool _hasKey = false;
+    public GameObject boss;
+    public GameObject TruckL;
+    public GameObject TruckR;
+    public bool hasOpened = false;
+    Vector3 initialPosL;
+    Vector3 initialPosR;
+    Vector3 goToL;
+    Vector3 goToR;
+    public bool _hasKey = false;
     public bool HasKey
     {
         get => _hasKey;
@@ -19,12 +26,39 @@ public class GayManager : MonoBehaviour
 
     private void Awake()
     {
+        initialPosL = TruckL.transform.position;
+        initialPosR = TruckR.transform.position;
+        goToL = new Vector3(initialPosL.x, initialPosL.y, initialPosL.z -5);
+        goToR = new Vector3(initialPosR.x, initialPosR.y, initialPosR.z +5);
+
         if (Instance == null)
             Instance = this;
         else
             Destroy(gameObject);
     }
+    private void Update()
+    {
+        if (hasOpened)
+        {
+            Debug.Log("inupdate");
 
+            TruckL.transform.position = goToL;
+
+            TruckR.transform.position = goToR;
+        }
+    }
     public void TriggerGameOver() => MenuManager.Instance.ShowGameOver();
     public void TriggerYouWon() => MenuManager.Instance.ShowYouWon();
+    public void OpenDoor()
+    {
+        if (!hasOpened)
+        {
+            Debug.Log("opendoor func");
+            //anim
+            hasOpened = true;
+            boss.SetActive(true);
+            
+        }
+    }
+    
 }

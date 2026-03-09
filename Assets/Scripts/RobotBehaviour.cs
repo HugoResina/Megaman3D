@@ -76,7 +76,7 @@ public class RobotBehaviour : MonoBehaviour
             isAttacking = true;
             _animator.SetBool("isAttacking", true);
             playerLastPosition = other.transform.position;
-            playerLastPosition.y = 0f;
+            playerLastPosition.y = transform.position.y;
             transform.LookAt(playerLastPosition);
 
             if (CanAttack)

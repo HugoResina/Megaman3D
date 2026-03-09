@@ -40,7 +40,6 @@ public class GayManager : MonoBehaviour
     {
         if (hasOpened)
         {
-            Debug.Log("inupdate");
 
             TruckL.transform.position = goToL;
 
@@ -53,8 +52,6 @@ public class GayManager : MonoBehaviour
     {
         if (!hasOpened)
         {
-            Debug.Log("opendoor func");
-            //anim
             hasOpened = true;
             boss.SetActive(true);
             

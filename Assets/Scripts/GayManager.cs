@@ -12,6 +12,8 @@ public class GayManager : MonoBehaviour
     Vector3 goToL;
     Vector3 goToR;
     public bool _hasKey = false;
+    public bool reachedRespawn = false;
+    public Transform respawnPoint;
     public bool HasKey
     {
         get => _hasKey;
@@ -46,7 +48,12 @@ public class GayManager : MonoBehaviour
             TruckR.transform.position = goToR;
         }
     }
-    public void TriggerGameOver() => MenuManager.Instance.ShowGameOver();
+    public void TriggerGameOver() 
+    {
+
+            MenuManager.Instance.ShowGameOver();
+
+    }
     public void TriggerYouWon() => MenuManager.Instance.ShowYouWon();
     public void OpenDoor()
     {

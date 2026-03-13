@@ -88,7 +88,16 @@ public class MenuManager : MonoBehaviour
     {
         gameOverPanel.SetActive(true);
         pauseMenuPanel.SetActive(false);
-        SetGameActive(false);
+        if (!GayManager.Instance.reachedRespawn)
+        {
+            SetGameActive(false);
+        }
+        else
+        {
+            Health h = GayManager.Instance.Player.GetComponent<Health>();
+            h.currentHealth = 100f;
+            GayManager.Instance.Player.transform.position = GayManager.Instance.respawnPoint.position;
+        }
     }
 
     public void ShowYouWon()

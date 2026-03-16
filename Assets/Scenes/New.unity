@@ -8343,7 +8343,7 @@ MonoBehaviour:
   TruckL: {fileID: 198294057}
   TruckR: {fileID: 61226124}
   hasOpened: 0
-  _hasKey: 1
+  _hasKey: 0
   reachedRespawn: 0
   respawnPoint: {fileID: 0}
   blockingCollider: {fileID: 1173640127}
@@ -25022,11 +25022,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1664830935394035032, guid: d2802a9a078d3624495ecc69d76e0f86, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -769
+      value: 4.15
       objectReference: {fileID: 0}
     - target: {fileID: 1664830935394035032, guid: d2802a9a078d3624495ecc69d76e0f86, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 48
+      value: 6.18
       objectReference: {fileID: 0}
     - target: {fileID: 1664830935394035032, guid: d2802a9a078d3624495ecc69d76e0f86, type: 3}
       propertyPath: m_LocalPosition.z

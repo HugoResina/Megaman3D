@@ -15,6 +15,7 @@ public class GayManager : MonoBehaviour
     public bool reachedRespawn = false;
     public Transform respawnPoint;
     public GameObject blockingCollider;
+    private bool bossActivated = false;
     public bool HasKey
     {
         get => _hasKey;
@@ -61,7 +62,11 @@ public class GayManager : MonoBehaviour
         if (!hasOpened)
         {
             hasOpened = true;
-            boss.SetActive(true);
+            if (!bossActivated)
+            {
+                boss.SetActive(true);
+                bossActivated = true;
+            }
             if (blockingCollider != null) blockingCollider.SetActive(false);
         }
     }
@@ -73,7 +78,7 @@ public class GayManager : MonoBehaviour
         hasOpened = false;
         TruckL.transform.position = initialPosL;
         TruckR.transform.position = initialPosR;
-        boss.SetActive(false);
+        // Boss is intentionally NOT touched here
         if (blockingCollider != null) blockingCollider.SetActive(true);
     }
 }

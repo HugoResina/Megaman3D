@@ -1,3 +1,4 @@
+// MenuManager.cs  (updated — restart skips the start screen)
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,7 +13,9 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private PlayerInputs playerInputs;
 
     private bool isPaused = false;
-    private bool gameStarted = false;
+
+    // Static flag survives scene reloads — set to true when restarting
+    private static bool s_skipStartMenu = false;
 
     public bool IsPaused => isPaused;
 
@@ -29,10 +32,16 @@ public class MenuManager : MonoBehaviour
 
     private void Start()
     {
-        ShowStartMenu();
+        if (s_skipStartMenu)
+        {
+            s_skipStartMenu = false; // reset for future restarts from main menu
+            StartGame();
+        }
+        else
+        {
+            ShowStartMenu();
+        }
     }
-
-    private void Update() { }
 
     private void SetGameActive(bool active)
     {
@@ -65,7 +74,9 @@ public class MenuManager : MonoBehaviour
     public void StartGame()
     {
         startMenuPanel.SetActive(false);
-        gameStarted = true;
+        pauseMenuPanel.SetActive(false);
+        gameOverPanel.SetActive(false);
+        youWonPanel.SetActive(false);
         isPaused = false;
         SetGameActive(true);
     }
@@ -88,16 +99,27 @@ public class MenuManager : MonoBehaviour
     {
         gameOverPanel.SetActive(true);
         pauseMenuPanel.SetActive(false);
-        if (!GayManager.Instance.reachedRespawn)
+
+        if (CheckpointManager.Instance != null && CheckpointManager.Instance.HasCheckpoint)
         {
-            SetGameActive(false);
+            StartCoroutine(RespawnAfterDelay(1.5f));
         }
         else
         {
-            Health h = GayManager.Instance.Player.GetComponent<Health>();
-            h.currentHealth = 100f;
-            GayManager.Instance.Player.transform.position = GayManager.Instance.respawnPoint.position;
+            SetGameActive(false);
         }
+    }
+
+    private System.Collections.IEnumerator RespawnAfterDelay(float delay)
+    {
+        Time.timeScale = 0.3f;
+        yield return new WaitForSecondsRealtime(delay);
+        Time.timeScale = 1f;
+
+        gameOverPanel.SetActive(false);
+
+        CheckpointManager.Instance.RespawnPlayer(GayManager.Instance.Player);
+        SetGameActive(true);
     }
 
     public void ShowYouWon()
@@ -109,6 +131,7 @@ public class MenuManager : MonoBehaviour
 
     public void RestartGame()
     {
+        s_skipStartMenu = true;
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
